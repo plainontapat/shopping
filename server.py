@@ -18,5 +18,30 @@ def my_json():
     return "200"
 
 
+@app.route("/register")
+def regiter():
+    return render_template("register.html")
+
+@app.route("/cart")
+def cart():
+    return render_template("cart.html")
+
+@app.route("/checkout")
+def checkout():
+    return render_template("checkout.html")
+
+@app.route("/product_detail")
+def prod_detail():
+    return render_template("product_detail.html")
+
+@app.route("/contact")
+def contact():
+    return render_template("contact.html")
+
+@app.route("/products")
+def prods():
+    return render_template("products.html")
+
+
 if __name__ == "__main__":
     app.run(host="127.0.0.1", port="5000")
