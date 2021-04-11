@@ -1,7 +1,15 @@
 from flask import Flask, request, render_template
 from flask import jsonify
+from pymongo import MongoClient
 
 app = Flask(__name__)
+
+client = MongoClient(
+    "mongodb://admin:FGCxns24841@node12656-shopping.app.ruk-com.cloud:11007"
+)
+mydb = client["Shopping"]
+stock = mydb["Stock"]
+user = mydb["User"]
 
 
 @app.route("/")
@@ -16,6 +24,13 @@ def my_json():
 
         return jsonify(data)
     return "200"
+
+
+@app.route("/get_all", methods=["GET", "POST"])
+def get_all():
+    # for post in mydb.TestMongoNew.find():
+    #   output.append({post['author'],post['Phone']})
+    return json_util.dumps(output)
 
 
 # insert function api POST
@@ -101,6 +116,7 @@ def contact():
 @app.route("/products")
 def prods():
     return render_template("products.html")
+
 
 @app.route("/myaccount")
 def base():
