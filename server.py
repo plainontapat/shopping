@@ -1,6 +1,8 @@
-from flask import Flask, request, render_template
+import bson
+from flask import Flask, json, request, render_template
 from flask import jsonify
 from pymongo import MongoClient
+from bson import json_util
 
 app = Flask(__name__)
 
@@ -28,8 +30,26 @@ def my_json():
 
 @app.route("/get_all", methods=["GET", "POST"])
 def get_all():
-    # for post in mydb.TestMongoNew.find():
-    #   output.append({post['author'],post['Phone']})
+    output = []
+    for post in mydb.TestMongoNew.find():
+        output.append({post["author"], post["Phone"]})
+    return json_util.dumps(output)
+
+
+@app.route("/api/get_user", methods=["GET", "POST"])
+def get_all():
+    output = []
+    for post in user.find():
+        output.append(
+            {
+                post["ID"],
+                post["Username"],
+                post["Credit"],
+                post["Name"],
+                post["Phone"],
+                post["Email"],
+            }
+        )
     return json_util.dumps(output)
 
 
