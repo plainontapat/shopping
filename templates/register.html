@@ -48,7 +48,7 @@
 		</div>
 		<div id="wrapper" class="container">
 			<section class="navbar main-menu">
-				<div class="navbar-inner main-menu">				
+				<div class="navbar-inneะr main-menu">				
 					<a href="/" class="logo pull-left"><img src="../static/themes/images//logo.png" class="site_logo" alt=""></a>
 					<nav id="menu" class="pull-right">
 						<ul>
@@ -80,11 +80,31 @@
 			</section>			
 			<section class="main-content">				
 				<div class="row">
-					<div class="span5">					
+					<div class="span5">
+						<!-- Login -->					
 						<h4 class="title"><span class="text"><strong>Login</strong> Form</span></h4>
-						<form action="#" method="post">
+						<form action="#" method="post" align="center">
 							<input type="hidden" name="next" value="/">
 							<fieldset>
+								<div class="controls">
+									<label class="control-label"><h4>
+										
+										Username : 
+									<input type="text" id="status" name="status" value="" ></h4></label>
+									
+								</div>
+								
+                                <div class="control-group">
+									<!--  Status -->
+									<div class="controls">
+										<label class="control-label"><h4>
+                                            &nbsp;
+                                            Password : 
+                                        <input type="text" id="status" name="status" value="" ></h4></label>
+                                        
+									</div>
+								</div>
+								<!---
 								<div class="control-group">
 									<label class="control-label">Username</label>
 									<div class="controls">
@@ -92,11 +112,11 @@
 									</div>
 								</div>
 								<div class="control-group">
-									<label class="control-label">Username</label>
+									<label class="control-label">Password</label>
 									<div class="controls">
 										<input type="password" placeholder="Enter your password" id="password" class="input-xlarge">
 									</div>
-								</div>
+								</div>-->
 								<div class="control-group">
 									<input tabindex="3" class="btn btn-inverse large" type="submit" value="Sign into your account">
 									<hr>
@@ -105,35 +125,88 @@
 							</fieldset>
 						</form>				
 					</div>
-					<div class="span7">					
+					<div class="span7">
+						<!-- Register -->					
 						<h4 class="title"><span class="text"><strong>Register</strong> Form</span></h4>
-						<form action="#" method="post" class="form-stacked">
+						<form action="#" method="post" align="center">
+							<input type="hidden" name="next" value="/">
 							<fieldset>
-								<div class="control-group">
-									<label class="control-label">Username</label>
+								<div class="controls">
+									<label class="control-label"><h4>
+										
+										Username : 
+									<input type="text" id="status" name="status" value="" ></h4></label>
+									
+								</div>
+								
+                                <div class="control-group">
+									<!--  Status -->
 									<div class="controls">
-										<input type="text" placeholder="Enter your username" class="input-xlarge">
+										<label class="control-label"><h4>
+                                            &nbsp;
+                                            Password : 
+                                        <input type="text" id="status" name="status" value="" ></h4></label>
+                                        
+									</div>
+								</div>
+                                
+                                <div class="control-group">
+									<!--  Name -->
+									<div class="controls">
+										<label class="control-label"><h4>
+                                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                            Name : 
+                                        <input type="text" id="name" name="name" value="" ></h4></label>
+                                        
+									</div>
+								</div>
+                                <div class="control-group">
+									<!--  Surname  -->
+									<div class="controls">
+										<label class="control-label"><h4>
+                                            &nbsp;
+                                            Surname : 
+                                        <input type="text" id="sname" name="sname" value="" ></h4></label>
+                                        
+									</div>
+								</div>
+                                <div class="control-group">
+									<!--  Phone -->
+									<div class="controls">
+										<label class="control-label"><h4>
+                                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                            Phone : 
+                                        <input type="text" id="phone" name="phone" value="" ></h4></label>
+                                        
+									</div>
+								</div>
+                                <div class="control-group">
+									<!--  Email -->
+									<div class="controls">
+										<label class="control-label"><h4>
+                                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                            Email : 
+                                        <input type="text" id="email" name="email" value="" ></h4></label>
+                                        
+									</div>
+								</div>
+                                <div class="control-group">
+									<!--  Address -->
+									<div class="controls">
+										<label class="control-label" for="address"><h4>
+                                            &nbsp;&nbsp;
+                                            Address : 
+                                        <!--<input type="text" id="address" name="address" value="Prachinburi 77510" readonly>-->
+                                        <textarea id="address" name="address" rows="4" cols="50" >  </textarea></h4></label>
 									</div>
 								</div>
 								<div class="control-group">
-									<label class="control-label">Email address:</label>
-									<div class="controls">
-										<input type="password" placeholder="Enter your email" class="input-xlarge">
-									</div>
+									<input tabindex="3" class="btn btn-inverse large" type="submit" value="Register">
+									<hr>
+									<p class="reset">Recover your <a tabindex="4" href="#" title="Recover your username or password">username or password</a></p>
 								</div>
-								<div class="control-group">
-									<label class="control-label">Password:</label>
-									<div class="controls">
-										<input type="password" placeholder="Enter your password" class="input-xlarge">
-									</div>
-								</div>							                            
-								<div class="control-group">
-									<p>Now that we know who you are. I'm not a mistake! In a comic, you know how you can tell who the arch-villain's going to be?</p>
-								</div>
-								<hr>
-								<div class="actions"><input tabindex="9" class="btn btn-inverse large" type="submit" value="Create your account"></div>
 							</fieldset>
-						</form>					
+						</form>								
 					</div>				
 				</div>
 			</section>			
