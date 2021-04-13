@@ -37,7 +37,7 @@ def get_all():
 
 
 @app.route("/api/get_user", methods=["GET", "POST"])
-def get_all():
+def get_user():
     output = []
     for post in user.find():
         output.append(
