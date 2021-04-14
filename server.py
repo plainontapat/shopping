@@ -12,6 +12,7 @@ client = MongoClient(
 mydb = client["Shopping"]
 stock = mydb["Stock"]
 user = mydb["User"]
+IDUser = ""
 
 
 @app.route("/")
@@ -72,18 +73,33 @@ def insertstock():
 
 @app.route("/api/insertuser", methods=["GET", "POST"])
 def insertuser():
-    ID_User = request.form["ID_User"]
-    Description = request.form["Description"]
-    Status = request.form["Status"]
-    Credit = request.form["Credit"]
+    username = request.form["username"]
+    password = request.form["password"]
+    name = request.form["Name"]
+    surname = request.form["surname"]
+    phone = request.form["phone"]
+    email = request.form["email"]
+    address = request.form["address"]
+    credit = 0
+    if user.count() == 0:
+        print(0)
+        IDUser = 1
+    else:
+        print(1)
+        IDUser = user.count() + 1
     Data = {
-        "ID_Product": ID_User,
-        "Description": Description,
-        "Status": Status,
-        "Credit": Credit,
+        "IDUser": IDUser,
+        "username": username,
+        "password": password,
+        "name": name,
+        "surname": surname,
+        "phone": phone,
+        "email": email,
+        "address": address,
+        "credit": credit,
     }
     user.insert_one(Data)
-    return jsonify({"status": "insert Success"})
+    return render_template("myaccount.html", SendData=Data)
 
 
 # Get Delete
@@ -139,7 +155,7 @@ def prods():
 
 
 @app.route("/myaccount")
-def base():
+def myaccount():
     return render_template("myaccount.html")
 
 

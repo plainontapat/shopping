@@ -22,7 +22,7 @@
         <div class="span8">
           <div class="account pull-right">
             <ul class="user-menu">
-              <li><a href="myaccount">My Account</a></li>
+              <li><a href="{{ url_for ('myaccount') }}">My Account</a></li>
               <li><a href="cart">Your Cart</a></li>
               <li><a href="checkout">Checkout</a></li>
               <li><a href="register">Login</a></li>
@@ -35,7 +35,10 @@
       <section class="navbar main-menu">
         <div class="navbar-inner main-menu">
           <a href="/" class="logo pull-left"
-            ><img src="../static/themes/images/logo.png" class="site_logo" alt=""
+            ><img
+              src="../static/themes/images/logo.png"
+              class="site_logo"
+              alt=""
           /></a>
           <nav id="menu" class="pull-right">
             <ul>
@@ -120,15 +123,15 @@
                             <span class="sale_tag"></span>
                             <p>
                               <a href="product_detail"
-                                ><img src="../static/themes/images/skate/0_BoardDecks-Omakase_Palm.jpg" alt=""
+                                ><img
+                                  src="../static/themes/images/skate/0_BoardDecks-Omakase_Palm.jpg"
+                                  alt=""
                               /></a>
                             </p>
                             <a href="product_detail" class="title"
                               >Omakase Deck Palm</a
                             ><br />
-                            <a href="products.html" class="category"
-                              >Loaded</a
-                            >
+                            <a href="products.html" class="category">Loaded</a>
                             <p class="price">6,390.00 ฿ THB</p>
                           </div>
                         </li>
@@ -137,15 +140,15 @@
                             <span class="sale_tag"></span>
                             <p>
                               <a href="product_detail"
-                                ><img src="../static/themes/images/ladies/2.jpg" alt=""
+                                ><img
+                                  src="../static/themes/images/ladies/2.jpg"
+                                  alt=""
                               /></a>
                             </p>
                             <a href="product_detail" class="title"
                               >Quis nostrud exerci tation</a
                             ><br />
-                            <a href="products" class="category"
-                              >Quis nostrud</a
-                            >
+                            <a href="products" class="category">Quis nostrud</a>
                             <p class="price">$32.50</p>
                           </div>
                         </li>
@@ -153,15 +156,15 @@
                           <div class="product-box">
                             <p>
                               <a href="product_detail"
-                                ><img src="../static/themes/images/ladies/3.jpg" alt=""
+                                ><img
+                                  src="../static/themes/images/ladies/3.jpg"
+                                  alt=""
                               /></a>
                             </p>
                             <a href="product_detail" class="title"
                               >Know exactly turned</a
                             ><br />
-                            <a href="products" class="category"
-                              >Quis nostrud</a
-                            >
+                            <a href="products" class="category">Quis nostrud</a>
                             <p class="price">$14.20</p>
                           </div>
                         </li>
@@ -169,15 +172,15 @@
                           <div class="product-box">
                             <p>
                               <a href="product_detail"
-                                ><img src="../static/themes/images/ladies/4.jpg" alt=""
+                                ><img
+                                  src="../static/themes/images/ladies/4.jpg"
+                                  alt=""
                               /></a>
                             </p>
                             <a href="product_detail" class="title"
                               >You think fast</a
                             ><br />
-                            <a href="products" class="category"
-                              >World once</a
-                            >
+                            <a href="products" class="category">World once</a>
                             <p class="price">$31.45</p>
                           </div>
                         </li>
@@ -189,15 +192,15 @@
                           <div class="product-box">
                             <p>
                               <a href="product_detail"
-                                ><img src="../static/themes/images/ladies/5.jpg" alt=""
+                                ><img
+                                  src="../static/themes/images/ladies/5.jpg"
+                                  alt=""
                               /></a>
                             </p>
                             <a href="product_detail" class="title"
                               >Know exactly</a
                             ><br />
-                            <a href="products" class="category"
-                              >Quis nostrud</a
-                            >
+                            <a href="products" class="category">Quis nostrud</a>
                             <p class="price">$22.30</p>
                           </div>
                         </li>
@@ -205,7 +208,9 @@
                           <div class="product-box">
                             <p>
                               <a href="product_detail"
-                                ><img src="../static/themes/images/ladies/6.jpg" alt=""
+                                ><img
+                                  src="../static/themes/images/ladies/6.jpg"
+                                  alt=""
                               /></a>
                             </p>
                             <a href="product_detail" class="title"
@@ -221,15 +226,15 @@
                           <div class="product-box">
                             <p>
                               <a href="product_detail"
-                                ><img src="../static/themes/images/ladies/7.jpg" alt=""
+                                ><img
+                                  src="../static/themes/images/ladies/7.jpg"
+                                  alt=""
                               /></a>
                             </p>
                             <a href="product_detail" class="title"
                               >You think water</a
                             ><br />
-                            <a href="products" class="category"
-                              >World once</a
-                            >
+                            <a href="products" class="category">World once</a>
                             <p class="price">$10.45</p>
                           </div>
                         </li>
@@ -237,15 +242,15 @@
                           <div class="product-box">
                             <p>
                               <a href="product_detail"
-                                ><img src="../static/themes/images/ladies/8.jpg" alt=""
+                                ><img
+                                  src="../static/themes/images/ladies/8.jpg"
+                                  alt=""
                               /></a>
                             </p>
                             <a href="product_detail" class="title"
                               >Quis nostrud exerci</a
                             ><br />
-                            <a href="products" class="category"
-                              >Quis nostrud</a
-                            >
+                            <a href="products" class="category">Quis nostrud</a>
                             <p class="price">$35.50</p>
                           </div>
                         </li>
@@ -314,9 +319,7 @@
                             <a href="product_detail" class="title"
                               >Quis nostrud exerci tation</a
                             ><br />
-                            <a href="products" class="category"
-                              >Quis nostrud</a
-                            >
+                            <a href="products" class="category">Quis nostrud</a>
                             <p class="price">$17.55</p>
                           </div>
                         </li>
@@ -350,9 +353,7 @@
                             <a href="product_detail" class="title"
                               >You think fast</a
                             ><br />
-                            <a href="products" class="category"
-                              >World once</a
-                            >
+                            <a href="products" class="category">World once</a>
                             <p class="price">$25.60</p>
                           </div>
                         </li>
@@ -372,9 +373,7 @@
                             <a href="product_detail" class="title"
                               >Know exactly</a
                             ><br />
-                            <a href="products" class="category"
-                              >Quis nostrud</a
-                            >
+                            <a href="products" class="category">Quis nostrud</a>
                             <p class="price">$45.50</p>
                           </div>
                         </li>
@@ -408,9 +407,7 @@
                             <a href="product_detail" class="title"
                               >You think water</a
                             ><br />
-                            <a href="products" class="category"
-                              >World once</a
-                            >
+                            <a href="products" class="category">World once</a>
                             <p class="price">$45.30</p>
                           </div>
                         </li>
@@ -426,9 +423,7 @@
                             <a href="product_detail" class="title"
                               >Quis nostrud exerci</a
                             ><br />
-                            <a href="products" class="category"
-                              >Quis nostrud</a
-                            >
+                            <a href="products" class="category">Quis nostrud</a>
                             <p class="price">$25.20</p>
                           </div>
                         </li>
@@ -442,7 +437,10 @@
               <div class="span4">
                 <div class="service">
                   <div class="responsive">
-                    <img src="../static/themes/images/feature_img_2.png" alt="" />
+                    <img
+                      src="../static/themes/images/feature_img_2.png"
+                      alt=""
+                    />
                     <h4>MODERN <strong>DESIGN</strong></h4>
                     <p>
                       Lorem Ipsum is simply dummy text of the printing and
@@ -454,7 +452,10 @@
               <div class="span4">
                 <div class="service">
                   <div class="customize">
-                    <img src="../static/themes/images/feature_img_1.png" alt="" />
+                    <img
+                      src="../static/themes/images/feature_img_1.png"
+                      alt=""
+                    />
                     <h4>FREE <strong>SHIPPING</strong></h4>
                     <p>
                       Lorem Ipsum is simply dummy text of the printing and
@@ -466,7 +467,10 @@
               <div class="span4">
                 <div class="service">
                   <div class="support">
-                    <img src="../static/themes/images/feature_img_3.png" alt="" />
+                    <img
+                      src="../static/themes/images/feature_img_3.png"
+                      alt=""
+                    />
                     <h4>24/7 LIVE <strong>SUPPORT</strong></h4>
                     <p>
                       Lorem Ipsum is simply dummy text of the printing and
@@ -483,22 +487,34 @@
         <h4 class="title"><span class="text">Manufactures</span></h4>
         <div class="row">
           <div class="span2">
-            <a href="#"><img alt="" src="../static/themes/images/clients/14.png" /></a>
+            <a href="#"
+              ><img alt="" src="../static/themes/images/clients/14.png"
+            /></a>
           </div>
           <div class="span2">
-            <a href="#"><img alt="" src="../static/themes/images/clients/35.png" /></a>
+            <a href="#"
+              ><img alt="" src="../static/themes/images/clients/35.png"
+            /></a>
           </div>
           <div class="span2">
-            <a href="#"><img alt="" src="../static/themes/images/clients/1.png" /></a>
+            <a href="#"
+              ><img alt="" src="../static/themes/images/clients/1.png"
+            /></a>
           </div>
           <div class="span2">
-            <a href="#"><img alt="" src="../static/themes/images/clients/2.png" /></a>
+            <a href="#"
+              ><img alt="" src="../static/themes/images/clients/2.png"
+            /></a>
           </div>
           <div class="span2">
-            <a href="#"><img alt="" src="../static/themes/images/clients/3.png" /></a>
+            <a href="#"
+              ><img alt="" src="../static/themes/images/clients/3.png"
+            /></a>
           </div>
           <div class="span2">
-            <a href="#"><img alt="" src="../static/themes/images/clients/4.png" /></a>
+            <a href="#"
+              ><img alt="" src="../static/themes/images/clients/4.png"
+            /></a>
           </div>
         </div>
       </section>
@@ -525,7 +541,11 @@
           </div>
           <div class="span5">
             <p class="logo">
-              <img src="../static/themes/images/logo.png" class="site_logo" alt="" />
+              <img
+                src="../static/themes/images/logo.png"
+                class="site_logo"
+                alt=""
+              />
             </p>
             <p>
               Lorem Ipsum is simply dummy text of the printing and typesetting
