@@ -1,13 +1,9 @@
-$(document).ready(function () {
-  $(".qtemp").on("click", function () {
-    var layout = $(this).data("rep");
+$(function () {
+  $("a#myaccount").bind("click", function () {
     $.ajax({
-      url: "/workstation",
-      type: "get",
-      data: { layout: layout },
-      success: function (response) {
-        var new_html = response.html;
-      },
+      type: "POST",
+      url: "{{url_for('myaccout')}}",
+      data: { data: 0 },
     });
   });
 });

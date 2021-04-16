@@ -5,25 +5,6 @@
     <title>Bootstrap E-commerce Templates</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content="" />
-    <!--[if ie]><meta content="IE=8" http-equiv="X-UA-Compatible" /><![endif]-->
-    <!-- bootstrap -->
-    <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet" />
-    <link href="bootstrap/css/bootstrap-responsive.min.css" rel="stylesheet" />
-    <link href="themes/css/bootstrappage.css" rel="stylesheet" />
-
-    <!-- global styles -->
-    <link href="themes/css/flexslider.css" rel="stylesheet" />
-    <link href="themes/css/main.css" rel="stylesheet" />
-
-    <!-- scripts -->
-    <script src="themes/js/jquery-1.7.2.min.js"></script>
-    <script src="bootstrap/js/bootstrap.min.js"></script>
-    <script src="themes/js/superfish.js"></script>
-    <script src="themes/js/jquery.scrolltotop.js"></script>
-    <!--[if lt IE 9]>
-      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
-      <script src="js/respond.min.js"></script>
-    <![endif]-->
     {% include 'MainCSJS.html' %}
   </head>
   <body>
@@ -41,10 +22,16 @@
         <div class="span8">
           <div class="account pull-right">
             <ul class="user-menu">
-              <li><a href="myaccount">My Account</a></li>
+              <li>
+                {% if Data != 0 %}
+                <a href="{{ url_for ('myaccount') }}">My Account</a>
+                {% else %}
+                <a href="{{ url_for ('myaccount') }}" hidden>My Account</a>
+                {% endif %}
+              </li>
               <li><a href="cart">Your Cart</a></li>
               <li><a href="checkout">Checkout</a></li>
-              <li><a href="register">Login</a></li>
+              <li><a href="{{ url_for ('register') }}" hidden>Login</a></li>
             </ul>
           </div>
         </div>
@@ -100,7 +87,7 @@
             <h4 class="title">
               <span class="text"><strong>Login</strong> Form</span>
             </h4>
-            <form action="#" method="post" align="center">
+            <form action="{{ url_for ('login') }}" method="post" align="center">
               <input type="hidden" name="next" value="/" />
               <fieldset>
                 <div class="controls">
@@ -109,8 +96,8 @@
                       Username :
                       <input
                         type="text"
-                        id="status"
-                        name="status"
+                        id="Username"
+                        name="Username"
                         value=""
                       /></h4
                   ></label>
@@ -123,9 +110,9 @@
                       ><h4>
                         &nbsp; Password :
                         <input
-                          type="text"
-                          id="status"
-                          name="status"
+                          type="Password"
+                          id="Password"
+                          name="Password"
                           value=""
                         /></h4
                     ></label>
@@ -197,7 +184,7 @@
                       ><h4>
                         &nbsp; Password :
                         <input
-                          type="text"
+                          type="Password"
                           id="password"
                           name="password"
                           value=""

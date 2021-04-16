@@ -1,8 +1,10 @@
+import re
 import bson
 from flask import Flask, json, request, render_template
-from flask import jsonify
+from flask import jsonify, redirect, url_for
 from pymongo import MongoClient
 from bson import json_util
+from pymongo.database import Database
 
 app = Flask(__name__)
 
@@ -12,21 +14,34 @@ client = MongoClient(
 mydb = client["Shopping"]
 stock = mydb["Stock"]
 user = mydb["User"]
-IDUser = ""
 
 
 @app.route("/")
 def hello_world():
-    return render_template("index.html")
+    Data = 0
+    return render_template("index.html", Data=Data)
 
 
-@app.route("/api/my_json", methods=["GET", "POST"])
-def my_json():
-    if request.method == "POST":
-        data = {"text": "Hello, AdaBrain", "user": "It's me Ada"}
+@app.route("/index", methods=["GET", "POST"])
+def index(Data):
+    return render_template("index.html", Data=Data)
 
-        return jsonify(data)
-    return "200"
+
+# @app.route("/main/api")
+# def main():
+#     Data = request.args.get("Data")
+#     if check == 0:
+#         redirect(url_for("register"))
+#     return render_template("index.html")
+
+
+# @app.route("/api/my_json", methods=["GET", "POST"])
+# def my_json():
+#     if request.method == "POST":
+#         data = {"text": "Hello, AdaBrain", "user": "It's me Ada"}
+
+#         return jsonify(data)
+#     return "200"
 
 
 @app.route("/get_all", methods=["GET", "POST"])
@@ -43,12 +58,14 @@ def get_user():
     for post in user.find():
         output.append(
             {
-                post["ID"],
-                post["Username"],
-                post["Credit"],
-                post["Name"],
-                post["Phone"],
-                post["Email"],
+                post["IDUser"],
+                post["username"],
+                post["password"],
+                post["name"],
+                post["surname"],
+                post["phone"],
+                post["email"],
+                post["address"],
             }
         )
     return json_util.dumps(output)
@@ -85,8 +102,12 @@ def insertuser():
         print(0)
         IDUser = 1
     else:
-        print(1)
-        IDUser = user.count() + 1
+        num = user.find({"username": username}).count()
+        if num >= 1:
+            return redirect(url_for("register"))
+        else:
+            print(1)
+            IDUser = user.count() + 1
     Data = {
         "IDUser": IDUser,
         "username": username,
@@ -98,8 +119,11 @@ def insertuser():
         "address": address,
         "credit": credit,
     }
+    output = ""
     user.insert_one(Data)
-    return render_template("myaccount.html", SendData=Data)
+    for post in user.find({"username": username}):
+        output.append({post["IDUser"]})
+    return redirect(url_for("check", Data=IDUser))
 
 
 # Get Delete
@@ -124,9 +148,25 @@ def Update():
     return jsonify({"status": "Update Success"})
 
 
+# Login
+@app.route("/api/login", methods=["GET", "POST"])
+def login():
+    Username = request.form["Username"]
+    Password = request.form["Password"]
+    num = user.find({"username": Username, "password": Password}).count()
+    Data = 0
+    if num == 1:
+        for post in user.find({"username": Username}):
+            Data = post["IDUser"]
+            print(Data)
+        return redirect(url_for("check", Data=Data))
+    else:
+        return render_template("register.html")
+
+
 @app.route("/register")
-def regiter():
-    return render_template("register.html")
+def register():
+    return render_template("register.html", Data=0)
 
 
 @app.route("/cart")
@@ -154,9 +194,41 @@ def prods():
     return render_template("products.html")
 
 
-@app.route("/myaccount")
+@app.route("/check", methods=["GET", "POST"])
+def check():
+    ID = int(request.args.get("Data"))
+    if ID != 0:
+        Dataa = []
+        DataC = []
+        main = []
+        for post in user.find({"IDUser": ID}):
+            Dataa.append([post["username"]])
+            Dataa.append([post["password"]])
+            Dataa.append([post["name"]])
+            Dataa.append([post["surname"]])
+            Dataa.append([post["phone"]])
+            Dataa.append([post["email"]])
+            Dataa.append([post["address"]])
+        for post in user.find({"IDUser": ID}):
+            main.append(["Username"])
+            main.append(["Password"])
+            main.append(["Name"])
+            main.append(["Surname"])
+            main.append(["Phone"])
+            main.append(["Email"])
+            main.append(["Address"])
+        for a in user.find({"IDUser": ID}):
+            DataC.append([a["IDUser"]])
+            DataC.append([a["username"]])
+            DataC.append([a["credit"]])
+        return render_template("myaccount.html", Data=Dataa, DataC=DataC, main=main)
+
+
+@app.route("/myaccount", methods=["GET", "POST"])
 def myaccount():
-    return render_template("myaccount.html")
+    Data = request.args.get("Dataa")
+    print(Data.username)
+    return render_template("myaccount.html", Data=Data)
 
 
 if __name__ == "__main__":

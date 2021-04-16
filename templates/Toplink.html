@@ -1,0 +1,25 @@
+{% block New %}
+<div class="row">
+  <div class="span4">
+    <form method="POST" class="search_form">
+      <input
+        type="text"
+        class="input-block-level search-query"
+        placeholder="eg. T-sirt"
+      />
+    </form>
+  </div>
+  <div class="span8">
+    <div class="account pull-right">
+      <ul class="user-menu">
+        <li>
+          <a href="{{ url_for ('main', Data = '0') }}">My Account</a>
+        </li>
+        <li><a href="{{ url_for ('main', Data = '1') }}">Your Cart</a></li>
+        <li><a href="{{ url_for ('main', Data = '2') }}">Checkout</a></li>
+        <li><a href="{{ url_for ('main', Data = '3') }}">Login</a></li>
+      </ul>
+    </div>
+  </div>
+</div>
+{% endblock %}

@@ -5,6 +5,7 @@
     <title>Bootstrap E-commerce Templates</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content="" />
+    <script src="{{ url_for ('static', filename='js/index.js') }}"></script>
     {% include 'MainCSJS.html' %}
   </head>
   <body>
@@ -22,10 +23,16 @@
         <div class="span8">
           <div class="account pull-right">
             <ul class="user-menu">
-              <li><a href="{{ url_for ('myaccount') }}">My Account</a></li>
+              <li>
+                {% if Data != 0 %}
+                <a href="{{ url_for ('myaccount') }}">My Account</a>
+                {% else %}
+                <a href="{{ url_for ('myaccount') }}" hidden>My Account</a>
+                {% endif %}
+              </li>
               <li><a href="cart">Your Cart</a></li>
               <li><a href="checkout">Checkout</a></li>
-              <li><a href="register">Login</a></li>
+              <li><a href="{{ url_for ('register') }}">Login</a></li>
             </ul>
           </div>
         </div>
