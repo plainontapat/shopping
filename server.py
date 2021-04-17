@@ -5,6 +5,7 @@ from flask import jsonify, redirect, url_for
 from pymongo import MongoClient
 from bson import json_util
 from pymongo.database import Database
+from pymongo.periodic_executor import PeriodicExecutor
 
 app = Flask(__name__)
 
@@ -19,12 +20,36 @@ user = mydb["User"]
 @app.route("/")
 def hello_world():
     Data = 0
-    return render_template("index.html", Data=Data)
+    Product = []
+    Name = []
+    price = []
+    IMG = []
+    for post in stock.find():
+        Product.append(post["ID_Product"])
+        Name.append([post["Name"]])
+        price.append(post["Price"])
+        IMG.append(post["ID_Product"] + ".jpg")
+    return render_template(
+        "index.html", Data=Data, Product=Product, Name=Name, Price=price, IMG=IMG
+    )
 
 
 @app.route("/index", methods=["GET", "POST"])
-def index(Data):
-    return render_template("index.html", Data=Data)
+def index():
+    ID = int(request.args.get("Data"))
+    print(ID)
+    Product = []
+    Name = []
+    price = []
+    IMG = []
+    for post in stock.find():
+        Product.append(post["ID_Product"])
+        Name.append([post["Name"]])
+        price.append(post["Price"])
+        IMG.append(post["ID_Product"] + ".jpg")
+    return render_template(
+        "index.html", Data=ID, Product=Product, Name=Name, Price=price, IMG=IMG
+    )
 
 
 # @app.route("/main/api")
@@ -77,10 +102,12 @@ def insertstock():
     ID_Product = request.form["ID_Product"]
     Amount = request.form["Amount"]
     Name = request.form["Name"]
+    Price = request.form["Price"]
     Description = request.form["Description"]
     Data = {
         "ID_Product": ID_Product,
         "Amount": Amount,
+        "Price": Price,
         "Name": Name,
         "Description": Description,
     }
@@ -181,7 +208,20 @@ def checkout():
 
 @app.route("/product_detail")
 def prod_detail():
-    return render_template("product_detail.html")
+    ID = int(request.args.get("Data"))
+    ID_P = request.args.get("DataP")
+    DataProduct = []
+    if ID != 0:
+        for post in stock.find({"ID_Product": ID_P}):
+            DataProduct.append(post["ID_Product"])
+            DataProduct.append(post["Name"])
+            DataProduct.append(post["ID_Product"] + ".jpg")
+            DataProduct.append(post["Price"])
+            DataProduct.append(post["Amount"])
+            DataProduct.append(post["Description"])
+        return render_template("product_detail.html", DataProduct=DataProduct, ID=ID)
+    else:
+        return render_template("register.html")
 
 
 @app.route("/contact")

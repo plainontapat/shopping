@@ -25,13 +25,17 @@
               <li>
                 {% if Data != 0 %}
                 <a href="{{ url_for ('myaccount') }}">My Account</a>
+                <li><a href="cart">Your Cart</a></li>
+                <a href="checkout">Checkout</a>
                 {% else %}
                 <a href="{{ url_for ('myaccount') }}" hidden>My Account</a>
                 {% endif %}
               </li>
-              <li><a href="cart">Your Cart</a></li>
-              <li><a href="checkout">Checkout</a></li>
+              {% if Data != 0 %}
+              <li><a href="{{ url_for ('register') }}">Login</a></li>
+              {% else %}
               <li><a href="{{ url_for ('register') }}" hidden>Login</a></li>
+              {% endif %}
             </ul>
           </div>
         </div>
