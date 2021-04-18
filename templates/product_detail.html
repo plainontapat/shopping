@@ -22,10 +22,14 @@
         <div class="span8">
           <div class="account pull-right">
             <ul class="user-menu">
-              <li><a href="myaccount">My Account</a></li>
-              <li><a href="cart">Your Cart</a></li>
-              <li><a href="checkout">Checkout</a></li>
-              <li><a href="register">Login</a></li>
+              <li>
+                <a href="{{ url_for ('check' , Data=ID) }}">My Account</a>
+              </li>
+              <li>
+                <a href="{{ url_for ('cart' , Data=ID) }}">Your Cart</a>
+              </li>
+              <li><a href="checkout" hidden>Checkout</a></li>
+              <li><a href="register" hidden>Login</a></li>
             </ul>
           </div>
         </div>
@@ -34,7 +38,7 @@
     <div id="wrapper" class="container">
       <section class="navbar main-menu">
         <div class="navbar-inner main-menu">
-          <a href="/" class="logo pull-left"
+          <a href="{{ url_for ('index' , Data=ID) }}" class="logo pull-left"
             ><img
               src="../static/themes/images/logo.png"
               class="site_logo"
@@ -148,19 +152,28 @@
                 <h4><strong>{{ DataProduct[3] }} ฿ THB</strong></h4>
               </div>
               <div class="span5">
-                <form class="form-inline">
-                  <label class="checkbox">
-                    <input type="checkbox" value="" /> Option one is this and
-                    that
-                  </label>
-                  <br />
-                  <label class="checkbox">
-                    <input type="checkbox" value="" /> Be sure to include why
-                    it's great
-                  </label>
+                <form
+                  action="{{ url_for ('insertcart') }}"
+                  class="form-inline"
+                  method="POST"
+                >
                   <p>&nbsp;</p>
+                  <input type="int" id="Data" value="{{ ID }}" name="Data" />
+                  <input
+                    type="text"
+                    id="DataProduct"
+                    name="DataProduct"
+                    value="{{ DataProduct[0] }}"
+                  />
                   <label>Qty:</label>
-                  <input type="text" class="span1" placeholder="1" />
+                  <input
+                    type="text"
+                    id="QTY"
+                    class="span1"
+                    placeholder="1"
+                    value="1"
+                    name="QTY"
+                  />
                   <button class="btn btn-inverse" type="submit">
                     Add to cart
                   </button>

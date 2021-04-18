@@ -26,7 +26,7 @@
               
                 {% if Data != 0 %}
                 <li><a href="{{ url_for ('check' , Data=Data) }}">My Account</a></li>
-                <li><a href="cart">Your Cart</a></li>
+                <li><a href="{{ url_for ('cart' , Data=Data) }}">Your Cart</a></li>
                 <li><a href="checkout">Checkout</a>
                 {% else %}
                 <a href="{{ url_for ('myaccount') }}" hidden>My Account</a>

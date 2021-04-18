@@ -185,7 +185,6 @@ def login():
     if num == 1:
         for post in user.find({"username": Username}):
             Data = post["IDUser"]
-            print(Data)
         return redirect(url_for("check", Data=Data))
     else:
         return render_template("register.html")
@@ -196,9 +195,65 @@ def register():
     return render_template("register.html", Data=0)
 
 
-@app.route("/cart")
+@app.route("/cart", methods=["GET", "POST"])
 def cart():
-    return render_template("cart.html")
+    ID = int(request.args.get("Data"))
+    mycol = mydb[str(ID)]
+    mycart = []
+    check = []
+    Datacrat = []
+    Price = []
+    IMG = []
+    for post in mycol.find():
+        for nameproduct in stock.find({"ID_Product": post["ProductID"]}):
+            Datacrat.append(nameproduct["Name"])
+            Price.append(nameproduct["Price"])
+            mycart.append(post["ProductID"])
+            check.append(post["QTY"])
+            IMG.append(post["ProductID"] + ".jpg")
+    return render_template(
+        "cart.html",
+        Datacrat=Datacrat,
+        Price=Price,
+        mycart=mycart,
+        check=check,
+        ID=ID,
+        IMG=IMG,
+    )
+
+
+@app.route("/api/insertcart", methods=["GET", "POST"])
+def insertcart():
+    ID = int(request.form["Data"])
+    DataProduct = request.form["DataProduct"]
+    QTY = request.form["QTY"]
+    mycol = mydb[str(ID)]
+    if ID != 0:
+        data = {
+            "ProductID": DataProduct,
+            "QTY": QTY,
+        }
+        if mycol.insert_one(data):
+            mycart = []
+            check = []
+            Datacrat = []
+            Price = []
+            for post in mycol.find():
+                for nameproduct in stock.find({"ID_Product": post["ProductID"]}):
+                    Datacrat.append(nameproduct["Name"])
+                    Price.append(nameproduct["Price"])
+                    mycart.append(post["ProductID"])
+                    check.append(post["QTY"])
+            return render_template(
+                "cart.html",
+                Datacrat=Datacrat,
+                Price=Price,
+                mycart=mycart,
+                check=check,
+                ID=ID,
+            )
+    else:
+        return render_template("register.html")
 
 
 @app.route("/checkout")
