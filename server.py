@@ -1,4 +1,4 @@
-import re
+import requests
 import bson
 from flask import Flask, json, request, render_template
 from flask import jsonify, redirect, url_for
@@ -8,6 +8,7 @@ from pymongo.database import Database
 from pymongo.periodic_executor import PeriodicExecutor
 
 app = Flask(__name__)
+app.secret_key = "hello"
 
 client = MongoClient(
     "mongodb://admin:FGCxns24841@node12656-shopping.app.ruk-com.cloud:11007"
@@ -356,6 +357,9 @@ def delcart():
 def prod_detail():
     ID = int(request.args.get("Data"))
     ID_P = request.args.get("DataP")
+    response = requests.get("https://covid19.th-stat.com/api/open/today")
+    dataurl = response.json()
+    data = [dataurl["Confirmed"], dataurl["NewConfirmed"], dataurl["Recovered"]]
     DataProduct = []
     if ID != 0:
         for post in stock.find({"ID_Product": ID_P}):
@@ -365,7 +369,9 @@ def prod_detail():
             DataProduct.append(post["Price"])
             DataProduct.append(post["Amount"])
             DataProduct.append(post["Description"])
-        return render_template("product_detail.html", DataProduct=DataProduct, ID=ID)
+        return render_template(
+            "product_detail.html", DataProduct=DataProduct, ID=ID, data=data
+        )
     else:
         return render_template("register.html")
 
@@ -418,4 +424,4 @@ def myaccount():
 
 
 if __name__ == "__main__":
-    app.run(host="127.0.0.1", port=5000)
+    app.run(host="0.0.0.0", port=80)
