@@ -3,14 +3,12 @@ from flask import Flask, json, request, render_template
 from flask import jsonify, redirect, url_for
 from pymongo import MongoClient
 from bson import json_util
-from pymongo.database import Database
-from pymongo.periodic_executor import PeriodicExecutor
 
 app = Flask(__name__)
 app.secret_key = "hello"
 
 client = MongoClient(
-    "mongodb://admin:FGCxns24841@node12656-shopping.app.ruk-com.cloud:11007"
+    "mongodb://admin:FGCxns24841@node12656-shopping.app.ruk-com.cloud:27017"
 )
 mydb = client["Shopping"]
 stock = mydb["Stock"]
@@ -423,4 +421,4 @@ def myaccount():
 
 
 if __name__ == "__main__":
-    app.run(host="0.0.0.0",port=80)
+    app.run(host="0.0.0.0", port=80)
