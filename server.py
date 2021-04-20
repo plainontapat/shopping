@@ -8,7 +8,7 @@ app = Flask(__name__)
 app.secret_key = "hello"
 
 client = MongoClient(
-    "mongodb://admin:FGCxns24841@node12656-shopping.app.ruk-com.cloud:11007"
+    "mongodb://admin:FGCxns24841@node12656-shopping.app.ruk-com.cloud:27017"
 )
 mydb = client["Shopping"]
 stock = mydb["Stock"]
@@ -347,7 +347,7 @@ def delcart():
     mycol = mydb[str(ID)]
     Delete = {"ProductID": ID_P}
     mycol.find_one_and_delete(Delete)
-    return render_template("cart.html", ID=ID)
+    return redirect(url_for("cart", Data=ID))
 
 
 @app.route("/product_detail")
