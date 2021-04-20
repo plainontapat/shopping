@@ -28,10 +28,7 @@
                 <li><a href="{{ url_for ('check' , Data=Data) }}">My Account</a></li>
                 <li><a href="{{ url_for ('cart' , Data=Data) }}">Your Cart</a></li>
                 <li><a href="checkout">Checkout</a>
-                {% else %}
-                <a href="{{ url_for ('myaccount') }}" hidden>My Account</a>
                 {% endif %}
-              </li>
               {% if Data != 0 %}
               <li><a href="{{ url_for ('register') }}" hidden>Login</a></li>
               {% else %}
@@ -52,30 +49,15 @@
             >{% endif %}<img
               src="../static/themes/images/logo.png"
               class="site_logo"
-              alt=""
+              alt="" style="width:150px;height:45px;"
           /></a>
           <nav id="menu" class="pull-right">
             <ul>
-              <li>
-                <a href="./products.html">Woman</a>
-                <ul>
-                  <li><a href="./products.html">Lacinia nibh</a></li>
-                  <li><a href="./products.html">Eget molestie</a></li>
-                  <li><a href="./products.html">Varius purus</a></li>
-                </ul>
-              </li>
-              <li><a href="./products.html">Man</a></li>
-              <li>
-                <a href="./products.html">Sport</a>
-                <ul>
-                  <li><a href="./products.html">Gifts and Tech</a></li>
-                  <li><a href="./products.html">Ties and Hats</a></li>
-                  <li><a href="./products.html">Cold Weather</a></li>
-                </ul>
-              </li>
-              <li><a href="./products.html">Hangbag</a></li>
-              <li><a href="./products.html">Best Seller</a></li>
-              <li><a href="./products.html">Top Seller</a></li>
+              <li><a href="./products.html">FIN</a></li>
+              <li><a href="./products.html">S Project High</a></li>
+              <li><a href="./products.html">Preduce</a></li>
+              <li><a href="./products.html">April</a></li>
+              <li><a href="./products.html">WM</a></li>
             </ul>
           </nav>
         </div>
@@ -88,19 +70,9 @@
             </li>
             <li>
               <img src="../static/themes/images/carousel/banner-2.jpg" alt="" />
-              <div class="intro">
-                <h1>Mid season sale</h1>
-                <p><span>Up to 50% Off</span></p>
-                <p><span>On selected items online and in stores</span></p>
-              </div>
             </li>
           </ul>
         </div>
-      </section>
-      <section class="header_text">
-        We stand for top quality templates. Our genuine developers always
-        optimized bootstrap commercial templates.
-        <br />Don't miss to use our cheap abd best bootstrap templates.
       </section>
       <section class="main-content">
         <div class="row">
