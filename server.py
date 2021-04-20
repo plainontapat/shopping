@@ -1,5 +1,4 @@
 import requests
-import bson
 from flask import Flask, json, request, render_template
 from flask import jsonify, redirect, url_for
 from pymongo import MongoClient
