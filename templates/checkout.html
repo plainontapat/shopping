@@ -93,51 +93,53 @@
                     <div class="row-fluid">
                       <div class="control-group">
                         <table class="table table-striped">
-							<thead>
-							  <tr>
-								<th>Image</th>
-								<th>Product Name</th>
-								<th>Quantity</th>
-								<th>Status</th>
-								<th>Unit Price</th>
-								<th>Total</th>
-							  </tr>
-							</thead>
-			  
-							<tbody>
-							  <tr>
-								{% for mydata in mycart %}
-								<td>
-								  <a
-									href="{{ url_for ('prod_detail' , DataP=mydata, Data=ID ) }}"
-									><img style="width:200px;height:200px;" alt="" src="../static/themes/images/skate/{{ IMG[loop.index - 1] }}"   /></a>
-								</td>
-								<td>{{ Datacrat[loop.index - 1] }}</td>
-								<td>
-								  <input
-									type="text"
-									placeholder="{{ check[loop.index - 1] }}"
-									class="input-mini"
-								  />
-								</td>
-								<td>{{ status[loop.index - 1] }}</td>
-								<td>{{ Price[loop.index - 1] }}</td>
-								<td>{{ Pricesum[loop.index - 1] }}</td>
-							  </tr>
-							  {% endfor %}
-							  <tr>
-								<td>&nbsp;</td>
-								<td>&nbsp;</td>
-								<td>&nbsp;</td>
-								<td>&nbsp;</td>
-								<td>&nbsp;</td>
-							  </tr>
-							</tbody>
-						  </table>
+                          <thead>
+                            <tr>
+                              <th>Image</th>
+                              <th>Product Name</th>
+                              <th>Quantity</th>
+                              <th>Status</th>
+                              <th>Unit Price</th>
+                              <th>Total</th>
+                            </tr>
+                          </thead>
+
+                          <tbody>
+                            <tr>
+                              {% for mydata in mycart %}
+                              <td>
+                                <a
+                                  href="{{ url_for ('prod_detail' , DataP=mydata, Data=ID ) }}"
+                                  ><img
+                                    style="width: 200px; height: 200px"
+                                    alt=""
+                                    src="../static/themes/images/skate/{{ IMG[loop.index - 1] }}"
+                                /></a>
+                              </td>
+                              <td>{{ Datacrat[loop.index - 1] }}</td>
+                              <td>{{ check[loop.index - 1] }}</td>
+                              <td>{{ status[loop.index - 1] }}</td>
+                              <td>{{ Price[loop.index - 1] }}</td>
+                              <td>{{ Pricesum[loop.index - 1] }}</td>
+                            </tr>
+                            {% endfor %}
+                            <tr>
+                              <td>&nbsp;</td>
+                              <td>&nbsp;</td>
+                              <td>&nbsp;</td>
+                              <td>&nbsp;</td>
+                              <td>&nbsp;</td>
+                              <td>{{ sum }}</td>
+                            </tr>
+                          </tbody>
+                        </table>
                       </div>
-                      <a href="{{ url_for ('checkout' , Data=ID ) }}" class="btn btn-inverse pull-right">
+                      <a
+                        href="{{ url_for ('checkout' , Data=ID ) }}"
+                        class="btn btn-inverse pull-right"
+                      >
                         Confirm order
-                      </button>
+                      </a>
                     </div>
                   </div>
                 </div>
