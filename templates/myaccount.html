@@ -25,7 +25,9 @@
               <li>
                 <a href="{{ url_for ('check' , Data=DataC[0]) }}">My Account</a>
               </li>
-              <li><a href="cart">Your Cart</a></li>
+              <li>
+                <a href="{{ url_for ('cart' , Data=DataC[0]) }}">Your Cart</a>
+              </li>
               <li><a href="checkout">Checkout</a></li>
               <li><a href="register" hidden>Login</a></li>
             </ul>

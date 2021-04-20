@@ -43,14 +43,12 @@
             <ul class="user-menu">
               <li>
                 <a href="{{ url_for ('check' , Data=ID) }}"
-                  >My Account{{ ID }}</a
+                  >My Account</a
                 >
               </li>
-              <li><a href="cart" hidden>Your Cart</a></li>
               <li>
                 <a href="{{ url_for ('checkout' , Data=ID) }}">Checkout</a>
               </li>
-              <li><a href="register" hidden>Login</a></li>
             </ul>
           </div>
         </div>
@@ -112,17 +110,19 @@
                   <th>Image</th>
                   <th>Product Name</th>
                   <th>Quantity</th>
+                  <th>Status</th>
                   <th>Unit Price</th>
                   <th>Total</th>
                 </tr>
               </thead>
-              {% for mydata in mycart %}
+
               <tbody>
                 <tr>
-                  <td><input type="checkbox" value="option1" /></td>
+                  {% for mydata in mycart %}
+                  <td><a href="{{ url_for ('delcart' , DataP=mydata, Data=ID ) }}" class="btn" type="button">Remove</abutton></td>
                   <td>
                     <a
-                      href="{{ url_for ('prod_detail' , DataP=mydata[loop.index - 1], Data=ID ) }}"
+                      href="{{ url_for ('prod_detail' , DataP=mydata, Data=ID ) }}"
                       ><img
                         alt=""
                         src="../static/themes/images/skate/{{ IMG[loop.index - 1] }}"
@@ -130,66 +130,44 @@
                   </td>
                   <td>{{ Datacrat[loop.index - 1] }}</td>
                   <td>
-                    <input type="text" placeholder="1" class="input-mini" />
+                    <input
+                      type="text"
+                      placeholder="{{ check[loop.index - 1] }}"
+                      class="input-mini"
+                    />
                   </td>
+                  <td>{{ status[loop.index - 1] }}</td>
                   <td>{{ Price[loop.index - 1] }}</td>
-                  <td></td>
+                  <td>{{ Pricesum[loop.index - 1] }}</td>
                 </tr>
+                {% endfor %}
                 <tr>
                   <td>&nbsp;</td>
                   <td>&nbsp;</td>
                   <td>&nbsp;</td>
                   <td>&nbsp;</td>
                   <td>&nbsp;</td>
-                  <td><strong>$3,600.00</strong></td>
                 </tr>
               </tbody>
-              {% endfor %}
             </table>
-            <h4>What would you like to do next?</h4>
-            <p>
-              Choose if you have a discount code or reward points you want to
-              use or would like to estimate your delivery cost.
-            </p>
-            <label class="radio">
-              <input
-                type="radio"
-                name="optionsRadios"
-                id="optionsRadios1"
-                value="option1"
-                checked=""
-              />
-              Use Coupon Code
-            </label>
-            <label class="radio">
-              <input
-                type="radio"
-                name="optionsRadios"
-                id="optionsRadios2"
-                value="option2"
-              />
-              Estimate Shipping &amp; Taxes
-            </label>
-            <hr />
             <p class="cart-total right">
-              <strong>Sub-Total</strong>: $100.00<br />
-              <strong>Eco Tax (-2.00)</strong>: $2.00<br />
-              <strong>VAT (17.5%)</strong>: $17.50<br />
-              <strong>Total</strong>: $119.50<br />
+              <strong>Total</strong>: {{ sum }} ฿ THB<br />
             </p>
             <hr />
             <p class="buttons center">
-              <button class="btn" type="button">Update</button>
-              <button class="btn" type="button">Continue</button>
-              <button class="btn btn-inverse" type="submit" id="checkout">
+              <a href="{{ url_for ('index' , Data=ID ) }}" class="btn" type="button">Continue</a>
+              {% if choice == 1 %}
+              <a href="{{ url_for ('checkout' , Data=ID ) }}" class="btn btn-inverse" type="submit" id="checkout" >
                 Checkout
-              </button>
+              </a>
+              {% endif %}
             </p>
           </div>
           <div class="span3 col">
             <div class="block">
+              <!-- API COVID 19  -->
               <ul class="nav nav-list">
-                <li class="nav-header">SUB CATEGORIES</li>
+                <li class="nav-header">API COVID 19</li>
                 <li><a href="products.html">Nullam semper elementum</a></li>
                 <li class="active">
                   <a href="products.html">Phasellus ultricies</a>

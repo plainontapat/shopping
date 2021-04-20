@@ -28,7 +28,9 @@
               <li>
                 <a href="{{ url_for ('cart' , Data=ID) }}">Your Cart</a>
               </li>
-              <li><a href="checkout" hidden>Checkout</a></li>
+              <li>
+                <a href="{{ url_for ('checkout' , Data=ID) }}">Checkout</a>
+              </li>
               <li><a href="register" hidden>Login</a></li>
             </ul>
           </div>
@@ -158,10 +160,17 @@
                   method="POST"
                 >
                   <p>&nbsp;</p>
-                  <input type="int" id="Data" value="{{ ID }}" name="Data" />
+                  <input
+                    type="int"
+                    id="Data"
+                    hidden
+                    value="{{ ID }}"
+                    name="Data"
+                  />
                   <input
                     type="text"
                     id="DataProduct"
+                    hidden
                     name="DataProduct"
                     value="{{ DataProduct[0] }}"
                   />
@@ -171,6 +180,7 @@
                     id="QTY"
                     class="span1"
                     placeholder="1"
+                    hidden
                     value="1"
                     name="QTY"
                   />
@@ -185,9 +195,6 @@
                 <!-- Description สินค้า -->
                 <ul class="nav nav-tabs" id="myTab">
                   <li class="active"><a href="#home">Description</a></li>
-                  <li class="">
-                    <a href="#profile">Additional Information</a>
-                  </li>
                 </ul>
                 <div class="tab-content">
                   <div class="tab-pane active" id="home">

@@ -204,22 +204,50 @@ def cart():
     Datacrat = []
     Price = []
     IMG = []
-    for post in mycol.find():
-        for nameproduct in stock.find({"ID_Product": post["ProductID"]}):
-            Datacrat.append(nameproduct["Name"])
-            Price.append(nameproduct["Price"])
-            mycart.append(post["ProductID"])
-            check.append(post["QTY"])
-            IMG.append(post["ProductID"] + ".jpg")
-    return render_template(
-        "cart.html",
-        Datacrat=Datacrat,
-        Price=Price,
-        mycart=mycart,
-        check=check,
-        ID=ID,
-        IMG=IMG,
-    )
+    Pricesum = []
+    status = []
+    choice = 0
+    sum = 0
+    if int(mycol.find().count()) >= 1:
+        choice = choice + 1
+        for post in mycol.find():
+            for nameproduct in stock.find({"ID_Product": post["ProductID"]}):
+                Datacrat.append(nameproduct["Name"])
+                Price.append(nameproduct["Price"])
+                mycart.append(post["ProductID"])
+                check.append(post["QTY"])
+                IMG.append(post["ProductID"] + ".jpg")
+                Pricesum.append(int(post["QTY"]) * int(nameproduct["Price"]))
+                sum = sum + (int(post["QTY"]) * int(nameproduct["Price"]))
+                status.append(post["Status"])
+        return render_template(
+            "cart.html",
+            Datacrat=Datacrat,
+            Price=Price,
+            mycart=mycart,
+            check=check,
+            ID=ID,
+            Pricesum=Pricesum,
+            sum=sum,
+            IMG=IMG,
+            choice=choice,
+            status=status,
+        )
+    else:
+        choice = choice + 2
+        return render_template(
+            "cart.html",
+            Datacrat=Datacrat,
+            Price=Price,
+            mycart=mycart,
+            check=check,
+            ID=ID,
+            Pricesum=Pricesum,
+            sum=sum,
+            IMG=IMG,
+            choice=choice,
+            status=status,
+        )
 
 
 @app.route("/api/insertcart", methods=["GET", "POST"])
@@ -229,36 +257,99 @@ def insertcart():
     QTY = request.form["QTY"]
     mycol = mydb[str(ID)]
     if ID != 0:
-        data = {
-            "ProductID": DataProduct,
-            "QTY": QTY,
-        }
-        if mycol.insert_one(data):
-            mycart = []
-            check = []
-            Datacrat = []
-            Price = []
-            for post in mycol.find():
-                for nameproduct in stock.find({"ID_Product": post["ProductID"]}):
-                    Datacrat.append(nameproduct["Name"])
-                    Price.append(nameproduct["Price"])
-                    mycart.append(post["ProductID"])
-                    check.append(post["QTY"])
-            return render_template(
-                "cart.html",
-                Datacrat=Datacrat,
-                Price=Price,
-                mycart=mycart,
-                check=check,
-                ID=ID,
-            )
+        check = int(mycol.find({"ProductID": DataProduct}).count())
+        if check == 1:
+            Pluscart = []
+            Checkcart = []
+            for post in mycol.find({"ProductID": DataProduct}):
+                for get in stock.find({"ID_Product": DataProduct}):
+                    if int(get["Amount"]) < (int(post["QTY"]) + int(QTY)):
+                        Pluscart.append(get["Amount"])
+                    else:
+                        Pluscart.append(int(post["QTY"]) + int(QTY))
+            Update = {"ProductID": DataProduct}
+            newvalues = {"$set": {"QTY": int(Pluscart[0])}}
+            if mycol.update_one(Update, newvalues):
+                print(check)
+                return redirect(url_for("cart", Data=ID))
+        else:
+            for get in stock.find({"ID_Product": DataProduct}):
+                if int(get["Amount"]) < int(QTY):
+                    data = {
+                        "ProductID": DataProduct,
+                        "QTY": get["Amount"],
+                        "Status": "limit",
+                    }
+                else:
+                    data = {
+                        "ProductID": DataProduct,
+                        "QTY": QTY,
+                        "Status": "Normarl",
+                    }
+            if mycol.insert_one(data):
+                Pluscart = []
+                for post in mycol.find({"ProductID": DataProduct}):
+                    for get in stock.find({"ID_Product": DataProduct}):
+                        if int(get["Amount"]) < (int(post["QTY"])):
+                            Pluscart.append(get["Amount"])
+                            Update = {"ProductID": DataProduct}
+                            newvalues = {"$set": {"QTY": int(Pluscart[0])}}
+                            if mycol.update_one(Update, newvalues):
+                                return redirect(url_for("cart", Data=ID))
+                        else:
+                            return redirect(url_for("cart", Data=ID))
     else:
-        return render_template("register.html")
+        return render_template("register.html", Data=0)
 
 
-@app.route("/checkout")
+@app.route("/checkout", methods=["GET", "POST"])
 def checkout():
-    return render_template("checkout.html")
+    ID = int(request.args.get("Data"))
+    mycol = mydb[str(ID)]
+    mycart = []
+    check = []
+    Datacrat = []
+    Price = []
+    IMG = []
+    Pricesum = []
+    status = []
+    choice = 0
+    sum = 0
+    if int(mycol.find().count()) >= 1:
+        choice = choice + 1
+        for post in mycol.find():
+            for nameproduct in stock.find({"ID_Product": post["ProductID"]}):
+                Datacrat.append(nameproduct["Name"])
+                Price.append(nameproduct["Price"])
+                mycart.append(post["ProductID"])
+                check.append(post["QTY"])
+                IMG.append(post["ProductID"] + ".jpg")
+                Pricesum.append(int(post["QTY"]) * int(nameproduct["Price"]))
+                sum = sum + (int(post["QTY"]) * int(nameproduct["Price"]))
+                status.append(post["Status"])
+        return render_template(
+            "checkout.html",
+            Datacrat=Datacrat,
+            Price=Price,
+            mycart=mycart,
+            check=check,
+            ID=ID,
+            Pricesum=Pricesum,
+            sum=sum,
+            IMG=IMG,
+            choice=choice,
+            status=status,
+        )
+
+
+@app.route("/api/delcart", methods=["GET", "POST"])
+def delcart():
+    ID = int(request.args.get("Data"))
+    ID_P = request.args.get("DataP")
+    mycol = mydb[str(ID)]
+    Delete = {"ProductID": ID_P}
+    mycol.find_one_and_delete(Delete)
+    return render_template("cart.html", ID=ID)
 
 
 @app.route("/product_detail")
