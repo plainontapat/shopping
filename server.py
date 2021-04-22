@@ -472,6 +472,7 @@ def check():
         credit = session["credit"]
         session["search"] = ""
         session["Brand"] = ""
+        session["sum"] = 0
         if ID != 0:
             Dataa = []
             DataC = []
