@@ -132,15 +132,13 @@ def insertuser():
     address = request.form["address"]
     credit = 0
     if user.count() == 0:
-        print(0)
         IDUser = 1
     else:
         num = user.find({"username": username}).count()
         if num >= 1:
             return redirect(url_for("register"))
         else:
-            print(1)
-            IDUser = user.count() + 1
+            IDUser = int(user.find().count()) + 1
     Data = {
         "IDUser": IDUser,
         "username": username,
@@ -152,10 +150,9 @@ def insertuser():
         "address": address,
         "credit": credit,
     }
-    output = ""
     user.insert_one(Data)
-    for post in user.find({"username": username}):
-        output.append({post["IDUser"]})
+    session["user"] = IDUser
+    session["credit"] = credit
     return redirect(url_for("check"))
 
 
