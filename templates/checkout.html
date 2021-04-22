@@ -23,11 +23,12 @@
           <div class="account pull-right">
             <ul class="user-menu">
               <li>
-                <a href="{{ url_for ('check' , Data=ID) }}">My Account</a>
+                <a href="{{ url_for ('check') }}">My Account</a>
               </li>
               <li>
-                <a href="{{ url_for ('cart' , Data=ID) }}">Your Cart</a>
+                <a href="{{ url_for ('cart') }}">Your Cart</a>
               </li>
+              <li><a href="{{ url_for ('logout') }}">Logout</a></li>
             </ul>
           </div>
         </div>
@@ -36,7 +37,7 @@
     <div id="wrapper" class="container">
       <section class="navbar main-menu">
         <div class="navbar-inner main-menu">
-          <a href="{{ url_for ('check' , Data=ID) }}" class="logo pull-left"
+          <a href="{{ url_for ('check') }}" class="logo pull-left"
             ><img
               src="../static/themes/images/logo.png"
               class="site_logo"
@@ -45,11 +46,17 @@
           /></a>
           <nav id="menu" class="pull-right">
             <ul>
-              <li><a href="./products.html">FIN</a></li>
-              <li><a href="./products.html">S Project High</a></li>
-              <li><a href="./products.html">Preduce</a></li>
-              <li><a href="./products.html">April</a></li>
-              <li><a href="./products.html">WM</a></li>
+              <li><a href="{{ url_for ('Type', type='FIN') }}">FIN</a></li>
+              <li>
+                <a href="{{ url_for ('Type', type='S Project High') }}"
+                  >S Project High</a
+                >
+              </li>
+              <li>
+                <a href="{{ url_for ('Type', type='Preduce') }}">Preduce</a>
+              </li>
+              <li><a href="{{ url_for ('Type', type='April') }}">April</a></li>
+              <li><a href="{{ url_for ('Type', type='WM') }}">WM</a></li>
             </ul>
           </nav>
         </div>
@@ -72,7 +79,7 @@
                     class="accordion-toggle"
                     data-toggle="collapse"
                     data-parent="#accordion2"
-                    href="#collapseThree"
+                    href="#"
                     >Confirm Order</a
                   >
                 </div>
@@ -83,10 +90,10 @@
                         <table class="table table-striped">
                           <thead>
                             <tr>
+                              <th>Bill</th>
                               <th>Image</th>
                               <th>Product Name</th>
                               <th>Quantity</th>
-                              <th>Status</th>
                               <th>Unit Price</th>
                               <th>Total</th>
                             </tr>
@@ -95,9 +102,10 @@
                           <tbody>
                             <tr>
                               {% for mydata in mycart %}
+                              <td>{{ Bill[loop.index - 1] }}</td>
                               <td>
                                 <a
-                                  href="{{ url_for ('prod_detail' , DataP=mydata, Data=ID ) }}"
+                                  href="{{ url_for ('prod_detail' , DataP=mydata) }}"
                                   ><img
                                     style="width: 200px; height: 200px"
                                     alt=""
@@ -106,7 +114,6 @@
                               </td>
                               <td>{{ Datacrat[loop.index - 1] }}</td>
                               <td>{{ check[loop.index - 1] }}</td>
-                              <td>{{ status[loop.index - 1] }}</td>
                               <td>{{ Price[loop.index - 1] }}</td>
                               <td>{{ Pricesum[loop.index - 1] }}</td>
                             </tr>
@@ -117,16 +124,16 @@
                               <td>&nbsp;</td>
                               <td>&nbsp;</td>
                               <td>&nbsp;</td>
-                              <td>{{ sum }}</td>
                             </tr>
                           </tbody>
                         </table>
                       </div>
                       <a
-                        href="{{ url_for ('checkout' , Data=ID ) }}"
+                        href="{{ url_for ('index') }}"
                         class="btn btn-inverse pull-right"
+                        type="disable"
                       >
-                        Confirm order
+                        Index
                       </a>
                     </div>
                   </div>

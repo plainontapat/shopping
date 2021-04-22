@@ -5,25 +5,6 @@
     <title>Bootstrap E-commerce Templates</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content="" />
-    <!--[if ie]><meta content="IE=8" http-equiv="X-UA-Compatible" /><![endif]-->
-    <!-- bootstrap -->
-    <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet" />
-    <link href="bootstrap/css/bootstrap-responsive.min.css" rel="stylesheet" />
-    <link href="themes/css/bootstrappage.css" rel="stylesheet" />
-
-    <!-- global styles -->
-    <link href="themes/css/flexslider.css" rel="stylesheet" />
-    <link href="themes/css/main.css" rel="stylesheet" />
-
-    <!-- scripts -->
-    <script src="themes/js/jquery-1.7.2.min.js"></script>
-    <script src="bootstrap/js/bootstrap.min.js"></script>
-    <script src="themes/js/superfish.js"></script>
-    <script src="themes/js/jquery.scrolltotop.js"></script>
-    <!--[if lt IE 9]>
-      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
-      <script src="themes/js/respond.min.js"></script>
-    <![endif]-->
     {% include 'MainCSJS.html' %}
   </head>
   <body>
@@ -42,13 +23,15 @@
           <div class="account pull-right">
             <ul class="user-menu">
               <li>
-                <a href="{{ url_for ('check' , Data=ID) }}"
+                <a href="{{ url_for ('check') }}"
                   >My Account</a
                 >
               </li>
               <li>
-                <a href="{{ url_for ('checkout' , Data=ID) }}">Checkout</a>
+                <a href="{{ url_for ('checkout') }}">Checkout</a>
               </li>
+              <li><a href="{{ url_for ('logout') }}">Logout</a></li>
+              <li>Credit : {{ session[ "credit" ] }}</li>
             </ul>
           </div>
         </div>
@@ -58,9 +41,9 @@
       <section class="navbar main-menu">
         <div class="navbar-inner main-menu">
           {% if Data != 0 %}
-          <a href="{{ url_for ('index' , Data=ID ) }}" class="logo pull-left"
+          <a href="{{ url_for ('index') }}" class="logo pull-left"
             >{% else %}
-            <a href="{{ url_for ('index' , Data=0 ) }}" class="logo pull-left"
+            <a href="{{ url_for ('index') }}" class="logo pull-left"
             >{% endif %}<img
               src="../static/themes/images/logo.png"
               class="site_logo"
@@ -68,11 +51,11 @@
           /></a>
           <nav id="menu" class="pull-right">
             <ul>
-              <li><a href="./products.html">FIN</a></li>
-              <li><a href="./products.html">S Project High</a></li>
-              <li><a href="./products.html">Preduce</a></li>
-              <li><a href="./products.html">April</a></li>
-              <li><a href="./products.html">WM</a></li>
+              <li><a href="{{ url_for ('Type', type='FIN') }}">FIN</a></li>
+              <li><a href="{{ url_for ('Type', type='S Project High') }}">S Project High</a></li>
+              <li><a href="{{ url_for ('Type', type='Preduce') }}">Preduce</a></li>
+              <li><a href="{{ url_for ('Type', type='April') }}">April</a></li>
+              <li><a href="{{ url_for ('Type', type='WM') }}">WM</a></li>
             </ul>
           </nav>
         </div>
@@ -107,10 +90,10 @@
               <tbody>
                 <tr>
                   {% for mydata in mycart %}
-                  <td><a href="{{ url_for ('delcart' , DataP=mydata, Data=ID ) }}" class="btn" type="button">Remove</abutton></td>
+                  <td><a href="{{ url_for ('delcart' , DataP=mydata) }}" class="btn" type="button">Remove</abutton></td>
                   <td>
                     <a
-                      href="{{ url_for ('prod_detail' , DataP=mydata, Data=ID ) }}"
+                      href="{{ url_for ('prod_detail' , DataP=mydata) }}"
                       ><img
                         alt=""
                         src="../static/themes/images/skate/{{ IMG[loop.index - 1] }}"
@@ -139,15 +122,24 @@
               </tbody>
             </table>
             <p class="cart-total right">
-              <strong>Total</strong>: {{ sum }} ฿ THB<br />
+              <strong>Total</strong>: {{session["sum"]}} ฿ THB<br />
             </p>
             <hr />
             <p class="buttons center">
-              <a href="{{ url_for ('index' , Data=ID ) }}" class="btn" type="button">Continue</a>
+              <a href="{{ url_for ('index') }}" class="btn" type="button">Continue</a>
               {% if choice == 1 %}
-              <a href="{{ url_for ('checkout' , Data=ID ) }}" class="btn btn-inverse" type="submit" id="checkout" >
-                Checkout
-              </a>
+              {% if session["sum"] > session["credit"] %} Credit is not
+                      enough
+                      <a
+                        href="{{ url_for ('check') }}"
+                        class="btn btn-inverse pull-right"
+                        type="disable"
+                      >
+                        Add Credit
+                      </a>
+                      {% else %}
+                      <a href="{{ url_for ('confirm') }}" class="btn btn-inverse" type="submit" id="checkout" >Checkout</a>
+              {% endif %}
               {% endif %}
             </p>
           </div>
@@ -155,24 +147,16 @@
             <div class="block">
               <!-- API COVID 19  -->
               <ul class="nav nav-list">
-                <li class="nav-header">API COVID 19</li>
-                <li><a href="products.html">Nullam semper elementum</a></li>
-                <li class="active">
-                  <a href="products.html">Phasellus ultricies</a>
-                </li>
-                <li><a href="products.html">Donec laoreet dui</a></li>
-                <li><a href="products.html">Nullam semper elementum</a></li>
-                <li><a href="products.html">Phasellus ultricies</a></li>
-                <li><a href="products.html">Donec laoreet dui</a></li>
-              </ul>
-              <br />
-              <ul class="nav nav-list below">
-                <li class="nav-header">MANUFACTURES</li>
-                <li><a href="products.html">Adidas</a></li>
-                <li><a href="products.html">Nike</a></li>
-                <li><a href="products.html">Dunlop</a></li>
-                <li><a href="products.html">Yamaha</a></li>
-              </ul>
+                <h4><strong>API</strong> COVID</h4>
+              </li>
+              <h4>
+                <li>ติดเชื้อสะสม: {{ data[0] }}</li>
+                <br />
+                <li><font color="red">เพิ่มขึ้น </font>: {{ data[1] }}</li>
+                <br />
+                <li>รักษาหายแล้ว : {{ data[2] }}</li>
+                <br />
+              </h4>
             </div>
             <div class="block">
               <h4 class="title">

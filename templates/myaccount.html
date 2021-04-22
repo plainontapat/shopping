@@ -23,12 +23,14 @@
           <div class="account pull-right">
             <ul class="user-menu">
               <li>
-                <a href="{{ url_for ('check' , Data=DataC[0]) }}">My Account</a>
+                <a href="{{ url_for ('check') }}">My Account</a>
               </li>
               <li>
-                <a href="{{ url_for ('cart' , Data=DataC[0]) }}">Your Cart</a>
+                <a href="{{ url_for ('cart') }}">Your Cart</a>
               </li>
-              <li><a href="checkout">Checkout</a></li>
+              <li><a href="{{ url_for ('checkout') }}">Checkout</a></li>
+              <li><a href="{{ url_for ('logout') }}">Logout</a></li>
+              <li>Credit : {{ credit }}</li>
             </ul>
           </div>
         </div>
@@ -37,7 +39,9 @@
     <div id="wrapper" class="container">
       <section class="navbar main-menu">
         <div class="navbar-inner main-menu">
-          <a href="/" class="logo pull-left"
+          <a
+            href="{{ url_for ('index') }}"
+            class="logo pull-left"
             ><img
               src="../static/themes/images/logo.png"
               class="site_logo"
@@ -46,11 +50,11 @@
           /></a>
           <nav id="menu" class="pull-right">
             <ul>
-              <li><a href="./products.html">FIN</a></li>
-              <li><a href="./products.html">S Project High</a></li>
-              <li><a href="./products.html">Preduce</a></li>
-              <li><a href="./products.html">April</a></li>
-              <li><a href="./products.html">WM</a></li>
+              <li><a href="{{ url_for ('Type', type='FIN') }}">FIN</a></li>
+              <li><a href="{{ url_for ('Type', type='S Project High') }}">S Project High</a></li>
+              <li><a href="{{ url_for ('Type', type='Preduce') }}">Preduce</a></li>
+              <li><a href="{{ url_for ('Type', type='April') }}">April</a></li>
+              <li><a href="{{ url_for ('Type', type='WM') }}">WM</a></li>
             </ul>
           </nav>
         </div>
@@ -71,9 +75,7 @@
             <h4 class="title">
               <span class="text"><strong>Information</strong>Form</span>
             </h4>
-
-            <form action="#" method="post" align="center">
-              <input type="hidden" name="next" value="/" />
+            <form action="{{ url_for ('Updateuser') }}" method="POST" align="center">
               <fieldset>
                 {% for mydata in main %}
                 <div class="control-group">
@@ -97,20 +99,18 @@
                         : {% endif %} {% if loop.index != 7 %} {% for Str in
                         Data[loop.index - 1] %}
                         <input
-                          type="Username"
+                          type="text"
                           id="{{ mydata[0] }}"
                           name="{{ mydata[0] }}"
                           value="{{ Str }}"
-                          readonly
                         />
                         {% endfor %}{% else %}{% for Str in Data[loop.index - 1]
                         %}
                         <textarea
-                          id="address"
-                          name="address"
+                          id="Address"
+                          name="Address"
                           rows="4"
                           cols="50"
-                          readonly
                         >
                         {{ Str }} </textarea
                         >{% endfor %}{% endif %}
@@ -255,7 +255,7 @@
             <h4 class="title">
               <span class="text"><strong>Credits</strong> Form</span>
             </h4>
-            <form action="#" method="post" class="form-stacked">
+            <form action="{{ url_for ('credit') }}" method="post" class="form-stacked">
               <fieldset>
                 {% for NE in DataC %}
                 <div class="control-group">
@@ -265,16 +265,16 @@
                       ><h4>
                         {% if loop.index == 1 %}
                         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                        ID : {% elif loop.index == 2 %} Username : {% else %}
-                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Credits : {% endif %}
+                        ID : <input type="text" id="IDUser" name="IDUser" value="{{ NE[0] }}" readonly /></h4>
+                  {% elif loop.index == 2 %} Username : <input type="text" id="username" name="username" value="{{ NE[0] }}" readonly /></h4>{% else %}
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; credits : 
                         <input
                           type="text"
-                          id="id"
-                          name="id"
+                          id="credit"
+                          name="credit"
                           value="{{ NE[0] }}"
-                          readonly
                         /></h4
-                    ></label>
+                    >{% endif %}</label>
                     {% if loop.index == 3 %}
                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
