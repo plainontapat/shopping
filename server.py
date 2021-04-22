@@ -8,7 +8,7 @@ app = Flask(__name__)
 app.secret_key = "hello"
 
 client = MongoClient(
-    "mongodb://admin:FGCxns24841@node12656-shopping.app.ruk-com.cloud:11007"
+    "mongodb://admin:FGCxns24841@node12656-shopping.app.ruk-com.cloud:27017"
 )
 mydb = client["Shopping"]
 stock = mydb["Stock"]
@@ -591,4 +591,4 @@ def logout():
 
 
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=5000)
+    app.run(host="0.0.0.0", port=80)
