@@ -128,7 +128,8 @@
             <p class="buttons center">
               <a href="{{ url_for ('index') }}" class="btn" type="button">Continue</a>
               {% if choice == 1 %}
-              {% if session["sum"] > session["credit"] %} Credit is not
+              {% if session["sum"] > 0 %}
+              {% if session["sum"] >= session["credit"] %} Credit is not
                       enough
                       <a
                         href="{{ url_for ('check') }}"
@@ -139,6 +140,7 @@
                       </a>
                       {% else %}
                       <a href="{{ url_for ('confirm') }}" class="btn btn-inverse" type="submit" id="checkout" >Checkout</a>
+              {% endif %}
               {% endif %}
               {% endif %}
             </p>
