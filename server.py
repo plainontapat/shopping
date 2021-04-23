@@ -164,7 +164,11 @@ def insertuser():
         if num >= 1:
             return redirect(url_for("register", status=2))
         else:
-            IDUser = int(user.find().count()) + 1
+            old = 0
+            for i in user.find():
+                if old < int(i["IDUser"]):
+                    old = int(i["IDUser"])
+            IDUser = old + 1
     Data = {
         "IDUser": IDUser,
         "username": username,
