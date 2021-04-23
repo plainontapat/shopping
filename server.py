@@ -317,12 +317,14 @@ def login():
 
 @app.route("/register")
 def register():
+    session["check"] = 0
     return render_template("register.html", Data=0)
 
 
 @app.route("/cart", methods=["GET", "POST"])
 def cart():
     if "user" in session:
+        session["check"] = 0
         ID = session["user"]
         credit = session["credit"]
         mycol = mydb[str(ID)]
@@ -493,6 +495,7 @@ def checkout():
 @app.route("/product_detail")
 def prod_detail():
     if "user" in session:
+        session["check"] = 0
         ID = session["user"]
         credit = session["credit"]
         ID_P = request.args.get("DataP")
@@ -535,6 +538,7 @@ def prods():
 @app.route("/check", methods=["GET", "POST"])
 def check():
     if "user" in session:
+        session["check"] = 0
         ID = session["user"]
         credit = session["credit"]
         session["search"] = ""
@@ -617,8 +621,10 @@ def confirm():
             print(5)
             session["credit"] = summit
             session["sum"] = 0
+            session["check"] = 1
             return redirect(url_for("checkout"))
         else:
+            session["check"] = 2
             return redirect(url_for("cart"))
     else:
         return redirect(url_for("index"))

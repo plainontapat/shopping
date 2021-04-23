@@ -197,8 +197,8 @@
 										<tbody>
 											<tr>
 											{% for mydata in ID_Product %}
-											<td><a href="{{ url_for ('Delete' , ID_Product=ID_Product) }}" class="btn" type="button">Remove</abutton></td>
-											<td>{{ ID_Product[loop.index - 1] }}</td>
+											<td><a href="{{ url_for ('Delete' , ID_Product=mydata ) }}" class="btn" type="button">Remove</a></td>
+											<td>{{ ID_Product[loop.index - 1] }} </td>
 											<td>{{ Brand[loop.index - 1] }}</td>
 											<td>{{ Amount[loop.index - 1] }}</td>
 											<td>{{ Name[loop.index - 1] }}</td>

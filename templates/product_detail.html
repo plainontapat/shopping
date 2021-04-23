@@ -168,6 +168,7 @@
                     value="{{ DataProduct[0] }}"
                   />
                   <label>Qty:</label>
+                  {% if DataProduct[4] != 0 %}
                   <input
                     type="text"
                     id="QTY"
@@ -177,10 +178,20 @@
                     value="1"
                     name="QTY"
                   />
-                  {% if DataProduct[4] != 0 %}
                   <button class="btn btn-inverse" type="submit">
                     Add to cart
                   </button>
+                  {% else %}
+                  <input
+                    type="text"
+                    id="QTY"
+                    class="span1"
+                    placeholder="1"
+                    hidden
+                    value="1"
+                    name="QTY"
+                    readonly
+                  />
                   {% endif %}
                 </form>
               </div>
