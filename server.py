@@ -37,6 +37,7 @@ def hello_world():
         IMG.append(post["ID_Product"] + ".jpg")
     return render_template(
         "index.html",
+        Data=Data,
         Product=Product,
         Name=Name,
         Price=price,
@@ -307,7 +308,7 @@ def login():
         else:
             for post in user.find({"username": Username}):
                 session["user"] = post["IDUser"]
-                session["credit"] = post["credit"]
+                session["credit"] = int(post["credit"])
             return redirect(url_for("check"))
     else:
         status = int(1)
