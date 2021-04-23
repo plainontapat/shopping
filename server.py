@@ -218,16 +218,13 @@ def Updateuser():
             return redirect(url_for("check"))
     else:
         if "admin" in session:
-            print(session["admin"])
-            ID = request.form["ID"]
-            print(ID)
             username = request.form["username"]
             print(username)
             password = request.form["password"]
             print(password)
             credit = request.form["credit"]
             print(credit)
-            Update = {"IDUser": int(ID)}
+            Update = {"username": username}
             newvalues = {
                 "$set": {
                     "username": username,
