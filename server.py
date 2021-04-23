@@ -9,7 +9,7 @@ app = Flask(__name__)
 app.secret_key = "hello"
 
 client = MongoClient(
-    "mongodb://admin:FGCxns24841@node12656-shopping.app.ruk-com.cloud:27017"
+    "mongodb://admin:FGCxns24841@node12656-shopping.app.ruk-com.cloud:11007"
 )
 mydb = client["Shopping"]
 stock = mydb["Stock"]
@@ -28,33 +28,35 @@ def hello_world():
     Name = []
     price = []
     IMG = []
+    Brand = []
     for post in stock.find():
         Product.append(post["ID_Product"])
+        Brand.append(post["Brand"])
         Name.append([post["Name"]])
         price.append(post["Price"])
         IMG.append(post["ID_Product"] + ".jpg")
     return render_template(
         "index.html",
-        Data=Data,
         Product=Product,
         Name=Name,
         Price=price,
         IMG=IMG,
-        credit=credit,
+        Brand=Brand,
     )
 
 
 @app.route("/index", methods=["GET", "POST"])
 def index():
     if "user" in session:
-        ID = session["user"]
         Product = []
         Name = []
         price = []
         IMG = []
+        Brand = []
         if session["search"] != "":
             for post in stock.find({"Name": session["search"]}):
                 Product.append(post["ID_Product"])
+                Brand.append(post["Brand"])
                 Name.append([post["Name"]])
                 price.append(post["Price"])
                 IMG.append(post["ID_Product"] + ".jpg")
@@ -62,6 +64,7 @@ def index():
         elif session["Brand"] != "":
             for post in stock.find({"Brand": session["Brand"]}):
                 Product.append(post["ID_Product"])
+                Brand.append(post["Brand"])
                 Name.append([post["Name"]])
                 price.append(post["Price"])
                 IMG.append(post["ID_Product"] + ".jpg")
@@ -70,6 +73,7 @@ def index():
             for post in stock.find():
                 Product.append(post["ID_Product"])
                 Name.append([post["Name"]])
+                Brand.append(post["Brand"])
                 price.append(post["Price"])
                 IMG.append(post["ID_Product"] + ".jpg")
         return render_template(
@@ -77,6 +81,7 @@ def index():
             Product=Product,
             Name=Name,
             Price=price,
+            Brand=Brand,
             IMG=IMG,
         )
     elif "admin" in session:
@@ -84,8 +89,10 @@ def index():
         Name = []
         price = []
         IMG = []
+        Brand = []
         for post in stock.find():
             Product.append(post["ID_Product"])
+            Brand.append(post["Brand"])
             Name.append([post["Name"]])
             price.append(post["Price"])
             IMG.append(post["ID_Product"] + ".jpg")
@@ -94,6 +101,7 @@ def index():
             Product=Product,
             Name=Name,
             Price=price,
+            Brand=Brand,
             IMG=IMG,
         )
     else:
@@ -294,12 +302,13 @@ def login():
     num = user.find({"username": Username, "password": Password}).count()
     if num == 1:
         if Username == "admin":
-            session["admin"] = "admin"
+            session["admin"] = Username
             return redirect(url_for("admin"))
-        for post in user.find({"username": Username}):
-            session["user"] = post["IDUser"]
-            session["credit"] = post["credit"]
-        return redirect(url_for("check"))
+        else:
+            for post in user.find({"username": Username}):
+                session["user"] = post["IDUser"]
+                session["credit"] = post["credit"]
+            return redirect(url_for("check"))
     else:
         status = int(1)
         return redirect(url_for("register", status=status))
@@ -498,6 +507,7 @@ def prod_detail():
                 DataProduct.append(post["Price"])
                 DataProduct.append(post["Amount"])
                 DataProduct.append(post["Description"])
+                DataProduct.append(post["Brand"])
             return render_template(
                 "product_detail.html",
                 DataProduct=DataProduct,
@@ -620,21 +630,21 @@ def myaccount():
 
 @app.route("/api/search", methods=["GET", "POST"])
 def search():
-    if session["user"] == "":
-        return redirect(url_for("register"))
-    else:
+    if "user" in session:
         session["search"] = request.form["Name"]
         return redirect(url_for("index"))
+    else:
+        return redirect(url_for("register"))
 
 
 @app.route("/api/type", methods=["GET", "POST"])
 def Type():
-    if session["user"] == "":
-        return redirect(url_for("register"))
-    else:
+    if "user" in session:
         typeproduct = request.args.get("type")
         session["Brand"] = typeproduct
         return redirect(url_for("index"))
+    else:
+        return redirect(url_for("register"))
 
 
 @app.route("/api/logout", methods=["GET", "POST"])
@@ -691,4 +701,4 @@ def admin():
 
 
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=80)
+    app.run(host="0.0.0.0", port=5000)
