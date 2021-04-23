@@ -11,11 +11,13 @@
     <div id="top-bar" class="container">
       <div class="row">
         <div class="span4">
-          <form method="POST" class="search_form">
+          <form action="{{ url_for ('search') }}" method="POST" class="search_form">
             <input
               type="text"
               class="input-block-level search-query"
-              placeholder="eg. T-sirt"
+              id="Name"
+              name="Name"
+              placeholder="Name Product"
             />
           </form>
         </div>
@@ -83,8 +85,8 @@
                     <label class="control-label"
                       ><h4>
                         {% if loop.index == 1 %}
-                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ mydata[0] }} : {%
-                        elif loop.index == 2 %}
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ mydata[0] }} : 
+                        {% elif loop.index == 2 %}
                         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ mydata[0]
                         }} : {% elif loop.index == 3 %}
                         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{
@@ -96,14 +98,23 @@
                         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{
                         mydata[0] }} : {% else %}
                         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Address
-                        : {% endif %} {% if loop.index != 7 %} {% for Str in
-                        Data[loop.index - 1] %}
-                        <input
-                          type="text"
-                          id="{{ mydata[0] }}"
-                          name="{{ mydata[0] }}"
-                          value="{{ Str }}"
-                        />
+                        : {% endif %} {% if loop.index != 7 %} 
+                        {% for Str in Data[loop.index - 1] %}
+                          {% if mydata[0] == "Username" %}
+                          <input
+                            type="text"
+                            id="{{ mydata[0] }}"
+                            name="{{ mydata[0] }}"
+                            value="{{ Str }}"
+                            readonly
+                          />{% else %}
+                          <input
+                            type="text"
+                            id="{{ mydata[0] }}"
+                            name="{{ mydata[0] }}"
+                            value="{{ Str }}"
+                          />
+                          {% endif %}
                         {% endfor %}{% else %}{% for Str in Data[loop.index - 1]
                         %}
                         <textarea

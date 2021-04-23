@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Bootstrap E-commerce Templates</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="" />
+    {% include 'MainCSJS.html' %}
+	<style>
+		.my-custom-scrollbar1 {
+			position: relative;
+			height: 300px;
+			overflow: auto;
+		}
+		.my-custom-scrollbar2 {
+			position: relative;
+			height: 500px;
+			overflow: auto;
+		}
+		.table-wrapper-scroll-y {
+		display: block;
+		}
+	</style>
+  </head>
+  <body>
+    <div id="top-bar" class="container">
+      <div class="row">
+        <div class="span4">
+          <form method="POST" class="search_form">
+            <input
+              type="text"
+              class="input-block-level search-query"
+              placeholder="eg. T-sirt"
+            />
+          </form>
+        </div>
+        <div class="span8">
+          <div class="account pull-right">
+            <ul class="user-menu">
+				<li><a href="{{ url_for ('logout') }}">Logout</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div id="wrapper" class="container">
+      <section class="navbar main-menu">
+        <div class="navbar-inner main-menu">
+          <a href="{{ url_for ('hello_world') }}" class="logo pull-left"
+            ><img
+              src="../static/themes/images/logo.png"
+              class="site_logo"
+              alt=""
+              style="width: 150px; height: 45px"
+          /></a>
+        </div>
+      </section>
+      <section class="header_text sub">
+        <img
+          class="pageBanner"
+          src="../static/themes/images/pageBanner.png"
+          alt="New products"
+          style="height: 250px"
+        />
+        <h4><span>Admin set</span></h4>
+      </section>
+      <section class="main-content">
+        <div class="row">
+          <div class="span12">
+            <div class="accordion" id="accordion2">
+              <div class="accordion-group">
+                <div class="accordion-heading">
+                  <a
+                    class="accordion-toggle"
+                    data-toggle="collapse"
+                    data-parent="#accordion2"
+                    href="#collapseOne"
+                    >Edit User</a
+                  >
+                </div>
+                <div id="collapseOne" class="accordion-body in collapse">
+                  <div class="accordion-inner">
+                    <div class="row-fluid">
+						<div class="span5">
+							<!-- span 7-->
+							<!-- Left account -->
+							<h4 class="title">
+							  <span class="text"><strong>Information</strong>User</span>
+							</h4>
+								<div class="table-wrapper-scroll-y my-custom-scrollbar1">
+									<table class="table table-striped">
+										<thead>
+										<tr>
+											<th>Remove</th>
+											<th>ID</th>
+											<th>Username</th>
+											<th>Password</th>
+											<th>Credit</th>
+										</tr>
+										</thead>
+										<tbody>
+											<tr>
+											{% for mydata in ID %}
+											<td><a href="{{ url_for ('deleteuser' , user=mydata) }}" class="btn" type="button">Remove</abutton></td>
+											<td>{{ ID[loop.index - 1] }}</td>
+											<td>{{ username[loop.index - 1] }}</td>
+											<td>{{ password[loop.index - 1] }}</td>
+											<td>{{ credit[loop.index - 1] }}</td>
+											</tr>
+											{% endfor %}
+										</tbody>
+									</table>
+								</div>
+						</div>
+						<div class="span7">
+							<!-- Register -->
+							<h4 class="title">
+							  <span class="text"><strong>Edit</strong>User Form</span>
+							</h4>
+						<form action="{{ url_for ('Updateuser') }}" method="post" align="center">
+							  <input type="hidden" value="/" />
+							  <fieldset>
+								<div class="controls">
+									<label class="control-label"
+									  ><h4>
+										&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ID :
+										<input type="number" name="ID" id="ID" value=""/></h4></label>
+								  </div>
+								<div class="controls-group">
+								  <label class="control-label"
+									><h4>
+									  Username :
+									  <input type="text" id="username" name="username" value=""/></h4></label>
+								</div>
+								<div class="control-group">
+								  <!--  Status -->
+								  <div class="controls">
+									<label class="control-label"
+									  ><h4>
+										&nbsp; Password :
+										<input type="Password" id="password" name="password" value=""/></h4></label>
+								  </div>
+								</div>
+								<div class="controls-group">
+									<label class="control-label"
+									  ><h4>
+										&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Credit :
+										<input type="number" id="credit" name="credit" value=""/></h4></label>
+								  </div>
+								<div class="control-group">
+								  <input
+									tabindex="3"
+									class="btn btn-inverse large"
+									type="submit"
+									value="Update"
+								  />
+								  <hr />
+								</div>
+							  </fieldset>
+						</form>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            <div class="accordion-group">
+                <div class="accordion-heading">
+                  <a
+                    class="accordion-toggle"
+                    data-toggle="collapse"
+                    data-parent="#accordion2"
+                    href="#collapseTwo"
+                    >Information &nbsp;Stock</a
+                  >
+                </div>
+                <div id="collapseTwo" class="accordion-body collapse">
+                  <div class="accordion-inner">
+                    <div class="row-fluid">
+						<div class="span7">
+							<!-- span 7-->
+							<!-- Left account -->
+							<h4 class="title">
+							  <span class="text"><strong>Information</strong>User</span>
+							</h4>
+								<div class="table-wrapper-scroll-y my-custom-scrollbar2">
+									<table class="table table-striped">
+										<thead>
+										<tr>
+											<th>Remove</th>
+											<th>ID</th>
+											<th>Brand</th>
+											<th>Amount</th>
+											<th>Name</th>
+											<th>Price</th>
+											<th>Description</th>
+										</tr>
+										</thead>
+										<tbody>
+											<tr>
+											{% for mydata in ID_Product %}
+											<td><a href="{{ url_for ('Delete' , ID_Product=ID_Product) }}" class="btn" type="button">Remove</abutton></td>
+											<td>{{ ID_Product[loop.index - 1] }}</td>
+											<td>{{ Brand[loop.index - 1] }}</td>
+											<td>{{ Amount[loop.index - 1] }}</td>
+											<td>{{ Name[loop.index - 1] }}</td>
+											<td>{{ Price[loop.index - 1] }}</td>
+											<td>{{ Description[loop.index - 1] }}</td>
+											</tr>
+											{% endfor %}
+										</tbody>
+									</table>
+								</div>
+						</div>
+						<div class="span5">
+							<!-- Register -->
+							<h4 class="title">
+							  <span class="text"><strong>Edit</strong>Stock Form</span>
+							</h4>
+						<form action="{{ url_for ('Update') }}" method="post" align="center">
+							  <input type="hidden" value="/" />
+							  <fieldset>
+								<div class="controls">
+									<label class="control-label"
+									  ><h4>
+										&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ID :
+										<input type="text" name="ID_Product" id="ID_Product" value=""/></h4></label>
+								  </div>
+								<div class="controls-group">
+								  <label class="control-label"
+									><h4>
+										Amount :
+									  <input type="text" id="Amount" name="Amount" value=""/></h4></label>
+								</div>
+								<div class="control-group">
+								  <!--  Status -->
+								  <div class="controls">
+									<label class="control-label"
+									  ><h4>
+										&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Price :
+										<input type="number" id="Price" name="Price" value=""/></h4></label>
+								  </div>
+								</div>
+								<div class="control-group">
+								  <input
+									tabindex="3"
+									class="btn btn-inverse large"
+									type="submit"
+									value="Update"
+								  />
+								  <hr />
+								</div>
+							  </fieldset>
+						</form>
+                    </div>
+					</div>
+                  </div>
+                </div>
+              </div>
+			</div>
+              <div class="accordion-group">
+                <div class="accordion-heading">
+                  <a
+                    class="accordion-toggle"
+                    data-toggle="collapse"
+                    data-parent="#accordion2"
+                    href="#collapseThree"
+                    >Insert Product</a
+                  >
+                </div>
+                <div id="collapseThree" class="accordion-body collapse">
+                  <div class="accordion-inner">
+                    <div class="row-fluid">
+						<div class="span5">
+							<!-- Register -->
+							<h4 class="title">
+							  <span class="text"><strong>Insert</strong>Stock Form</span>
+							</h4>
+						<form action="{{ url_for ('insertstock') }}" method="post" align="center" enctype="multipart/form-data">
+							  <input type="hidden" value="/" />
+							  <fieldset>
+								<div class="controls">
+									<label class="control-label"
+									  ><h4>
+										&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+										&nbsp;&nbsp;ID :
+										<input type="text" name="ID_Product" id="ID_Product" value=""/></h4></label>
+								</div>
+								<div class="controls">
+									<label class="control-label"
+									  ><h4>
+										&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Brand :
+										<input type="text" name="Brand" id="Brand" value=""/></h4></label>
+								</div>
+								<div class="controls-group">
+								  <label class="control-label"
+									><h4>
+										&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Amount :
+									  <input type="text" id="Amount" name="Amount" value=""/></h4></label>
+								</div>
+								<div class="controls">
+									<label class="control-label"
+									  ><h4>
+										&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Name :
+										<input type="text" name="Name" id="Name" value=""/></h4></label>
+								</div>
+								<div class="control-group">
+								  <div class="controls">
+									<label class="control-label"
+									  ><h4>
+										&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Price :
+										<input type="number" id="Price" name="Price" value=""/></h4></label>
+								  </div>
+								  <div class="controls">
+									<label class="control-label"
+									  ><h4>
+										Description :
+										<input type="Address" name="Description" id="Description" value="" rows="4"
+										cols="50"/></h4></label>
+								</div>
+								<div class="controls">
+									<label class="control-label"
+									  ><h4>
+										&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Image :
+										<input type="file" name="file"/></h4></label>
+								</div>
+								</div>
+								<div class="control-group">
+								  <input
+									tabindex="3"
+									class="btn btn-inverse large"
+									type="submit"
+									value="InsertStock"
+								  />
+								  <hr />
+								</div>
+							  </fieldset>
+						</form>
+                    </div>
+					<div class="span7">
+						<!-- span 7-->
+						<!-- Left account -->
+						<h4 class="title">
+						  <span class="text"><strong>Information</strong>User</span>
+						</h4>
+							<div class="table-wrapper-scroll-y my-custom-scrollbar2">
+								<table class="table table-striped">
+									<thead>
+									<tr>
+										<th>ID</th>
+										<th>img</th>
+									</tr>
+									</thead>
+									<tbody>
+										<tr>
+										{% for mydata in ID_Product %}
+										<td>{{ ID_Product[loop.index - 1] }}</td>
+										<td><img
+											src="../static/themes/images/skate/{{ IMG[loop.index - 1] }}"
+											alt="" style="width: 75px;height: 75px;"
+										/></td>
+										</tr>
+										{% endfor %}
+									</tbody>
+								</table>
+							</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <section id="footer-bar">
+        <div class="row">
+          <div class="span3">
+            <h4>Navigation</h4>
+            <ul class="nav">
+              <li><a href="./index.html">Homepage</a></li>
+              <li><a href="./about.html">About Us</a></li>
+              <li><a href="./contact.html">Contac Us</a></li>
+              <li><a href="./cart.html">Your Cart</a></li>
+              <li><a href="./register.html">Login</a></li>
+            </ul>
+          </div>
+          <div class="span4">
+            <h4>My Account</h4>
+            <ul class="nav">
+              <li><a href="#">My Account</a></li>
+              <li><a href="#">Order History</a></li>
+              <li><a href="#">Wish List</a></li>
+              <li><a href="#">Newsletter</a></li>
+            </ul>
+          </div>
+          <div class="span5">
+            <p class="logo">
+              <img src="themes/images/logo.png" class="site_logo" alt="" />
+            </p>
+            <p>
+              Lorem Ipsum is simply dummy text of the printing and typesetting
+              industry. the Lorem Ipsum has been the industry's standard dummy
+              text ever since the you.
+            </p>
+            <br />
+            <span class="social_icons">
+              <a class="facebook" href="#">Facebook</a>
+              <a class="twitter" href="#">Twitter</a>
+              <a class="skype" href="#">Skype</a>
+              <a class="vimeo" href="#">Vimeo</a>
+            </span>
+          </div>
+        </div>
+      </section>
+      <section id="copyright">
+        <span>Copyright 2013 bootstrappage template All right reserved.</span>
+      </section>
+    </div>
+    <script src="themes/js/common.js"></script>
+  </body>
+</html>

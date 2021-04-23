@@ -11,11 +11,13 @@
     <div id="top-bar" class="container">
       <div class="row">
         <div class="span4">
-          <form method="POST" class="search_form">
+          <form action="{{ url_for ('search') }}" method="POST" class="search_form">
             <input
               type="text"
               class="input-block-level search-query"
-              placeholder="eg. T-sirt"
+              id="Name"
+              name="Name"
+              placeholder="Name Product"
             />
           </form>
         </div>
@@ -102,19 +104,6 @@
                     ></label>
                   </div>
                 </div>
-                <!---
-								<div class="control-group">
-									<label class="control-label">Username</label>
-									<div class="controls">
-										<input type="text" placeholder="Enter your username" id="username" class="input-xlarge">
-									</div>
-								</div>
-								<div class="control-group">
-									<label class="control-label">Password</label>
-									<div class="controls">
-										<input type="password" placeholder="Enter your password" id="password" class="input-xlarge">
-									</div>
-								</div>-->
                 <div class="control-group">
                   <input
                     tabindex="3"
@@ -123,8 +112,9 @@
                     value="Sign into your account"
                   />
                   <hr />
+                  
                   <p class="reset">
-                    Recover your
+                    Recover your{{ status }}
                     <a
                       tabindex="4"
                       href="#"
@@ -135,6 +125,7 @@
                 </div>
               </fieldset>
             </form>
+                
           </div>
           <div class="span7">
             <!-- Register -->

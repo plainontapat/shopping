@@ -1,4 +1,5 @@
 import requests
+import os
 from flask import Flask, json, request, render_template
 from flask import jsonify, redirect, url_for, session
 from pymongo import MongoClient
@@ -73,7 +74,23 @@ def index():
                 IMG.append(post["ID_Product"] + ".jpg")
         return render_template(
             "index.html",
-            Data=ID,
+            Product=Product,
+            Name=Name,
+            Price=price,
+            IMG=IMG,
+        )
+    elif "admin" in session:
+        Product = []
+        Name = []
+        price = []
+        IMG = []
+        for post in stock.find():
+            Product.append(post["ID_Product"])
+            Name.append([post["Name"]])
+            price.append(post["Price"])
+            IMG.append(post["ID_Product"] + ".jpg")
+        return render_template(
+            "index.html",
             Product=Product,
             Name=Name,
             Price=price,
@@ -88,16 +105,7 @@ def get_user():
     output = []
     for post in user.find():
         output.append(
-            {
-                post["IDUser"],
-                post["username"],
-                post["password"],
-                post["name"],
-                post["surname"],
-                post["phone"],
-                post["email"],
-                post["address"],
-            }
+            {post["IDUser"], post["username"], post["password"], post["credit"]}
         )
     return json_util.dumps(output)
 
@@ -106,19 +114,28 @@ def get_user():
 @app.route("/api/insertstock", methods=["GET", "POST"])
 def insertstock():
     ID_Product = request.form["ID_Product"]
+    Brand = request.form["Brand"]
     Amount = request.form["Amount"]
     Name = request.form["Name"]
     Price = request.form["Price"]
     Description = request.form["Description"]
-    Data = {
-        "ID_Product": ID_Product,
-        "Amount": Amount,
-        "Price": Price,
-        "Name": Name,
-        "Description": Description,
-    }
-    stock.insert_one(Data)
-    return jsonify({"status": "Create Success"})
+    uploaded_file = request.files["file"]
+    if uploaded_file.filename != "":
+        uploaded_file.save(
+            os.path.join("static/themes/images/skate", str(ID_Product) + ".jpg")
+        )
+        Data = {
+            "ID_Product": ID_Product,
+            "Brand": Brand,
+            "Amount": Amount,
+            "Price": Price,
+            "Name": Name,
+            "Description": Description,
+        }
+    if stock.insert_one(Data):
+        return redirect(url_for("admin"))
+    else:
+        return redirect(url_for("register"))
 
 
 @app.route("/api/insertuser", methods=["GET", "POST"])
@@ -136,7 +153,7 @@ def insertuser():
     else:
         num = user.find({"username": username}).count()
         if num >= 1:
-            return redirect(url_for("register"))
+            return redirect(url_for("register", status=2))
         else:
             IDUser = int(user.find().count()) + 1
     Data = {
@@ -158,34 +175,65 @@ def insertuser():
 
 @app.route("/api/Updateuser", methods=["GET", "POST"])
 def Updateuser():
-    ID = session["user"]
-    if ID != 0:
-        print(ID)
-        username = request.form["Username"]
-        password = request.form["Password"]
-        name = request.form["Name"]
-        surname = request.form["Surname"]
-        phone = request.form["Phone"]
-        email = request.form["Email"]
-        address = request.form["Address"]
-        Update = {"IDUser": ID}
+    if "user" in session:
+        ID = session["user"]
+        if ID != 0:
+            username = request.form["Username"]
+            password = request.form["Password"]
+            name = request.form["Name"]
+            surname = request.form["Surname"]
+            phone = request.form["Phone"]
+            email = request.form["Email"]
+            address = request.form["Address"]
+            Update = {"username": username}
+            newvalues = {
+                "$set": {
+                    "username": username,
+                    "password": password,
+                    "name": name,
+                    "surname": surname,
+                    "phone": phone,
+                    "email": email,
+                    "address": address,
+                }
+            }
+            if user.update_one(Update, newvalues):
+                return redirect(url_for("check"))
+            else:
+                return redirect(url_for("check"))
+        else:
+            return redirect(url_for("check"))
+    elif "admin" in session:
+        ID = request.form["ID"]
+        username = request.form["username"]
+        password = request.form["password"]
+        credit = request.form["credit"]
+        Update = {"IDUser": int(ID)}
         newvalues = {
             "$set": {
                 "username": username,
                 "password": password,
-                "name": name,
-                "surname": surname,
-                "phone": phone,
-                "email": email,
-                "address": address,
+                "credit": credit,
             }
         }
         if user.update_one(Update, newvalues):
-            return redirect(url_for("check"))
+            return redirect(url_for("admin"))
         else:
-            return redirect(url_for("check"))
+            return redirect(url_for("register"))
     else:
-        return redirect(url_for("check"))
+        return redirect(url_for("hello_world"))
+
+
+@app.route("/api/Deleteuser", methods=["GET", "POST"])
+def deleteuser():
+    if "admin" in session:
+        ID = request.args.get("user")
+        print(ID)
+        Delete = {"IDUser": int(ID)}
+        x = user.find_one_and_delete(Delete)
+        return redirect(url_for("admin"))
+    else:
+        redirect(url_for("hello_world"))
 
 
 @app.route("/api/cradit", methods=["GET", "POST"])
@@ -212,23 +260,30 @@ def credit():
 # Get Delete
 @app.route("/api/Deletestock", methods=["GET", "POST"])
 def Delete():
-    ID_Product = request.form["ID_Product"]
-    Delete = {"ID_Product": ID_Product}
-    stock.find_one_and_delete(Delete)
-    return jsonify({"status": "Delete success"})
+    if "admin" in session:
+        ID_Product = request.args.get("ID_Product")
+        Delete = {"ID_Product": ID_Product}
+        stock.find_one_and_delete(Delete)
+        return redirect(url_for("admin"))
+    else:
+        return redirect(url_for("hello_world"))
 
 
 # # Get Update
 @app.route("/api/Updatestock", methods=["GET", "POST"])
 def Update():
-    ID_Product = request.form["ID_Product"]
-    Amount = request.form["Amount"]
-    Name = request.form["Name"]
-    Description = request.form["Description"]
-    Update = {"ID_Product": ID_Product}
-    newvalues = {"$set": {"Amount": Amount, "Name": Name, "Description": Description}}
-    stock.update_one(Update, newvalues)
-    return jsonify({"status": "Update Success"})
+    if "admin" in session:
+        ID_Product = request.form["ID_Product"]
+        Amount = request.form["Amount"]
+        Price = request.form["Price"]
+        Update = {"ID_Product": ID_Product}
+        newvalues = {"$set": {"Amount": Amount, "Price": Price}}
+        if stock.update_one(Update, newvalues):
+            return redirect(url_for("admin"))
+        else:
+            return redirect(url_for("admin"))
+    else:
+        return redirect(url_for("hello_world"))
 
 
 # Login
@@ -238,12 +293,16 @@ def login():
     Password = request.form["Password"]
     num = user.find({"username": Username, "password": Password}).count()
     if num == 1:
+        if Username == "admin":
+            session["admin"] = "admin"
+            return redirect(url_for("admin"))
         for post in user.find({"username": Username}):
             session["user"] = post["IDUser"]
             session["credit"] = post["credit"]
         return redirect(url_for("check"))
     else:
-        return redirect(url_for("register"))
+        status = int(1)
+        return redirect(url_for("register", status=status))
 
 
 @app.route("/register")
@@ -585,7 +644,50 @@ def logout():
     session.pop("sum", None)
     session.pop("Brand", None)
     session.pop("search", None)
+    session.pop("admin", None)
     return redirect(url_for("hello_world"))
+
+
+@app.route("/admin", methods=["GET", "POST"])
+def admin():
+    username = []
+    password = []
+    ID = []
+    credit = []
+    ID_Product = []
+    Brand = []
+    Amount = []
+    Name = []
+    Price = []
+    Description = []
+    IMG = []
+    for post in user.find():
+        ID.append(post["IDUser"])
+        username.append(post["username"])
+        password.append(post["password"])
+        credit.append(post["credit"])
+    for post in stock.find():
+        ID_Product.append(post["ID_Product"])
+        Brand.append(post["Brand"])
+        Amount.append(post["Amount"])
+        Name.append(post["Name"])
+        Price.append(post["Price"])
+        Description.append(post["Description"])
+        IMG.append(str(post["ID_Product"]) + ".jpg")
+    return render_template(
+        "admin.html",
+        ID=ID,
+        username=username,
+        password=password,
+        credit=credit,
+        ID_Product=ID_Product,
+        Brand=Brand,
+        Amount=Amount,
+        Name=Name,
+        Price=Price,
+        Description=Description,
+        IMG=IMG,
+    )
 
 
 if __name__ == "__main__":

@@ -11,11 +11,17 @@
     <div id="top-bar" class="container">
       <div class="row">
         <div class="span4">
-          <form method="POST" class="search_form">
+          <form
+            action="{{ url_for ('search') }}"
+            method="POST"
+            class="search_form"
+          >
             <input
               type="text"
               class="input-block-level search-query"
-              placeholder="eg. T-sirt"
+              id="Name"
+              name="Name"
+              placeholder="Name Product"
             />
           </form>
         </div>
@@ -80,7 +86,7 @@
                     data-toggle="collapse"
                     data-parent="#accordion2"
                     href="#"
-                    >Confirm Order</a
+                    >History</a
                   >
                 </div>
                 <div id="collapseOne" class="accordion-body in collapse">
@@ -100,9 +106,9 @@
                           </thead>
 
                           <tbody>
-                            <tr>
+                            <tr><h4>
                               {% for mydata in mycart %}
-                              <td>{{ Bill[loop.index - 1] }}</td>
+                              <td></h4>{{ Bill[loop.index - 1] }}</td>
                               <td>
                                 <a
                                   href="{{ url_for ('prod_detail' , DataP=mydata) }}"
@@ -116,6 +122,7 @@
                               <td>{{ check[loop.index - 1] }}</td>
                               <td>{{ Price[loop.index - 1] }}</td>
                               <td>{{ Pricesum[loop.index - 1] }}</td>
+                            </h4>
                             </tr>
                             {% endfor %}
                             <tr>
