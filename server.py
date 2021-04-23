@@ -216,25 +216,31 @@ def Updateuser():
                 return redirect(url_for("check"))
         else:
             return redirect(url_for("check"))
-    elif "admin" in session:
-        ID = request.form["ID"]
-        username = request.form["username"]
-        password = request.form["password"]
-        credit = request.form["credit"]
-        Update = {"IDUser": int(ID)}
-        newvalues = {
-            "$set": {
-                "username": username,
-                "password": password,
-                "credit": credit,
+    else:
+        if "admin" in session:
+            print(session["admin"])
+            ID = request.form["ID"]
+            print(ID)
+            username = request.form["username"]
+            print(username)
+            password = request.form["password"]
+            print(password)
+            credit = request.form["credit"]
+            print(credit)
+            Update = {"IDUser": int(ID)}
+            newvalues = {
+                "$set": {
+                    "username": username,
+                    "password": password,
+                    "credit": credit,
+                }
             }
-        }
-        if user.update_one(Update, newvalues):
-            return redirect(url_for("admin"))
+            if user.update_one(Update, newvalues):
+                return redirect(url_for("admin"))
+            else:
+                return redirect(url_for("register"))
         else:
             return redirect(url_for("register"))
-    else:
-        return redirect(url_for("hello_world"))
 
 
 @app.route("/api/Deleteuser", methods=["GET", "POST"])
@@ -307,7 +313,7 @@ def login():
     num = user.find({"username": Username, "password": Password}).count()
     if num == 1:
         if Username == "admin":
-            session["admin"] = Username
+            session["admin"] = str(Username)
             return redirect(url_for("admin"))
         else:
             for post in user.find({"username": Username}):
