@@ -122,13 +122,13 @@ def get_user():
 # insert function api POST
 @app.route("/api/insertstock", methods=["GET", "POST"])
 def insertstock():
-    ID_Product = request.form["ID_Product"]
-    Brand = request.form["Brand"]
-    Amount = request.form["Amount"]
-    Name = request.form["Name"]
-    Price = request.form["Price"]
-    Description = request.form["Description"]
-    uploaded_file = request.files["file"]
+    ID_Product = request.args.get("ID_Product")
+    Brand = request.args.get("Brand")
+    Amount = request.args.get("Amount")
+    Name = request.args.get("Name")
+    Price = request.args.get("Price")
+    Description = request.args.get("Description")
+    uploaded_file = request.args.get("file")
     if uploaded_file.filename != "":
         uploaded_file.save(
             os.path.join("static/themes/images/skate", str(ID_Product) + ".jpg")
