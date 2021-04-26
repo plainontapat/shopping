@@ -117,7 +117,25 @@ def get_user():
     output = []
     for post in user.find():
         output.append(
-            {post["IDUser"], post["username"], post["password"], post["credit"]}
+            {
+                "UserID": post["IDUser"],
+                "Username": post["username"],
+                "Credit": post["credit"],
+            }
+        )
+    return json_util.dumps(output)
+
+
+@app.route("/api/get_stock", methods=["GET", "POST"])
+def get_stock():
+    output = []
+    for post in stock.find():
+        output.append(
+            {
+                "ID_Product": post["ID_Product"],
+                "Name": post["Name"],
+                "Price": post["Price"],
+            }
         )
     return json_util.dumps(output)
 
