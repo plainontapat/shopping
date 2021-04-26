@@ -9,7 +9,7 @@ app = Flask(__name__)
 app.secret_key = "hello"
 
 client = MongoClient(
-    "mongodb://admin:FGCxns24841@node12656-shopping.app.ruk-com.cloud:27017"
+    "mongodb://admin:GHPaqm69680@node12651-projectadv.app.ruk-com.cloud:27017"
 )
 mydb = client["Shopping"]
 stock = mydb["Stock"]
