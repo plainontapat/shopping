@@ -35,7 +35,7 @@
                 <a href="{{ url_for ('cart') }}">Your Cart</a>
               </li>
               <li><a href="{{ url_for ('logout') }}">Logout</a></li>
-              <li>Credit : {{ credit }}</li>
+              <li>Credit : {{ session["credit"] }}</li>
             </ul>
           </div>
         </div>
