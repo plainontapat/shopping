@@ -9,7 +9,7 @@ app = Flask(__name__)
 app.secret_key = "hello"
 
 client = MongoClient(
-    "mongodb://admin:FGCxns24841@node12656-shopping.app.ruk-com.cloud:27017"
+    "mongodb://admin:GHPaqm69680@node12651-projectadv.app.ruk-com.cloud:27017"
 )
 mydb = client["Shopping"]
 stock = mydb["Stock"]
@@ -49,6 +49,9 @@ def hello_world():
 @app.route("/index", methods=["GET", "POST"])
 def index():
     if "user" in session:
+        for post in user.find({"IDUser": session["user"]}):
+            credit = int(post["credit"])
+        session["credit"] = credit
         Product = []
         Name = []
         price = []
@@ -333,7 +336,9 @@ def cart():
     if "user" in session:
         session["check"] = 0
         ID = session["user"]
-        credit = session["credit"]
+        for post in user.find({"IDUser": ID}):
+            credit = int(post["credit"])
+        session["credit"] = credit
         mycol = mydb[str(ID)]
         mycart = []
         check = []
@@ -468,6 +473,9 @@ def delcart():
 def checkout():
     if "user" in session:
         ID = session["user"]
+        for post in user.find({"IDUser": ID}):
+            credit = int(post["credit"])
+        session["credit"] = credit
         mycart = []
         check = []
         Datacrat = []
@@ -504,7 +512,8 @@ def prod_detail():
     if "user" in session:
         session["check"] = 0
         ID = session["user"]
-        credit = session["credit"]
+        for post in user.find({"IDUser": ID}):
+            credit = int(post["credit"])
         ID_P = request.args.get("DataP")
         response = requests.get("https://covid19.th-stat.com/api/open/today")
         dataurl = response.json()
@@ -547,7 +556,9 @@ def check():
     if "user" in session:
         session["check"] = 0
         ID = session["user"]
-        credit = session["credit"]
+        for post in user.find({"IDUser": ID}):
+            credit = int(post["credit"])
+        session["credit"] = credit
         session["search"] = ""
         session["Brand"] = ""
         session["sum"] = 0

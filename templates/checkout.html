@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <title>Bootstrap E-commerce Templates</title>
+    <title>Skate Shopping</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content="" />
     {% include 'MainCSJS.html' %}
@@ -35,6 +35,7 @@
                 <a href="{{ url_for ('cart') }}">Your Cart</a>
               </li>
               <li><a href="{{ url_for ('logout') }}">Logout</a></li>
+              <li>Credit : {{ credit }}</li>
             </ul>
           </div>
         </div>
