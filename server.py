@@ -514,6 +514,7 @@ def prod_detail():
         ID = session["user"]
         for post in user.find({"IDUser": ID}):
             credit = int(post["credit"])
+        session["credit"] = credit
         ID_P = request.args.get("DataP")
         response = requests.get("https://covid19.th-stat.com/api/open/today")
         dataurl = response.json()
